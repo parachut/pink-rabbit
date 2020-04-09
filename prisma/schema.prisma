@@ -1,0 +1,255 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Brand {
+  id          String    @default(cuid()) @id
+  name        String
+  slug        String    @unique
+  description String
+  founded     DateTime
+  created     DateTime  @default(now())
+  products    Product[]
+
+  @@map("brand")
+}
+
+model Category {
+  id          String    @default(cuid()) @id
+  name        String
+  slug        String    @unique
+  description String
+  parentId    String    @map("parent_id")
+  created     DateTime  @default(now())
+  products    Product[]
+
+  @@map("category")
+}
+
+model Product {
+  id          String      @default(cuid()) @id
+  name        String
+  slug        String      @unique
+  description String
+  active      Boolean     @default(true)
+  width       Float
+  height      Float
+  depth       Float
+  weight      Float
+  images      String[]
+  mfr         String
+  price       Float
+  popularity  Int
+  demand      Int
+  released    DateTime
+  elasticId   String      @map("elastic_id")
+  created     DateTime    @default(now())
+  inventory   Inventory[]
+  brand       Brand       @relation(fields: [brandId], references: [id])
+  brandId     String      @map("brand_id")
+  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String      @map("category_id")
+  orders      Order[]     @relation("order_product", references: [id])
+
+  @@map("product")
+}
+
+enum InventoryCondition {
+  NEW
+  LIKENEW
+  EXCELLENT
+  USED
+  DAMAGED
+}
+
+enum InventoryStatus {
+  NEW
+  PENDING
+  ACCEPTED
+  ENROUTEWAREHOUSE
+  INSPECTING
+  INWAREHOUSE
+  SHIPMENTPREP
+  ENROUTEMEMBER
+  WITHMEMBER
+  RETURNING
+  OUTOFSERVICE
+  ENROUTEOWNER
+  RETURNED
+  STOLEN
+  LOST
+}
+
+model Inventory {
+  id                 String             @default(cuid()) @id
+  serial             String
+  sku                String
+  active             Boolean            @default(true)
+  condition          InventoryCondition @default(NEW)
+  status             InventoryStatus    @default(NEW)
+  includedEssentials String[]           @map("included_essentials")
+  returnReason       String             @map("return_reason")
+  return             Boolean            @default(false)
+  created            DateTime           @default(now())
+  bin                Bin                @relation(fields: [binId], references: [id])
+  binId              String             @map("bin_id")
+  product            Product            @relation(fields: [productId], references: [id])
+  productId          String             @map("product_id")
+  userId             String             @map("user_id")
+  memberId           String             @map("member_id")
+  shipments          Shipment[]         @relation("shipment_inventory", references: [id])
+  orders             Order[]            @relation("order_inventory", references: [id])
+
+  @@map("inventory")
+}
+
+model Bin {
+  id        String        @default(cuid()) @id
+  cell      Int
+  column    Int
+  row       Int
+  location  Int
+  width     Float
+  height    Float
+  created   DateTime      @default(now())
+  freeNodes BinFreeNode[]
+  inventory Inventory[]
+
+  @@map("bin")
+}
+
+model BinFreeNode {
+  id      String   @default(cuid()) @id
+  x       Float
+  y       Float
+  width   Float
+  height  Float
+  created DateTime @default(now())
+  bin     Bin      @relation(fields: [binId], references: [id])
+  binId   String   @map("bin_id")
+
+  @@map("bin_free_node")
+}
+
+model Address {
+  id              String     @default(cuid()) @id
+  street1         String
+  street2         String
+  city            String
+  state           String
+  zip             String
+  country         String
+  residential     Boolean
+  carrierFacility String     @map("carrier_facility")
+  name            String
+  company         String
+  phone           String
+  email           String
+  created         DateTime   @default(now())
+  easyPostId      String     @map("easy_post_id")
+  userId          String     @map("user_id")
+  shipments       Shipment[]
+
+  @@map("address")
+}
+
+model Warehouse {
+  id              String   @default(cuid()) @id
+  street1         String
+  street2         String
+  city            String
+  state           String
+  zip             String
+  country         String
+  residential     Boolean
+  carrierFacility String   @map("carrier_facility")
+  name            String
+  company         String
+  phone           String
+  email           String
+  created         DateTime @default(now())
+  easyPostId      String   @map("easy_post_id")
+
+  @@map("warehouse")
+}
+
+enum ShipmentDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum ShipmentStatus {
+  UNKNOWN
+  PRETRANSIT
+  INTRANSIT
+  OUTFORDELIVERY
+  DELIVERED
+  AVAILABLEFORPICKUP
+  RETURNTOSENDER
+  FAILURE
+  CANCELLED
+  ERROR
+}
+
+enum ShipmentType {
+  ACCESS
+  EARN
+}
+
+model Shipment {
+  id                 String            @default(cuid()) @id
+  pickup             Boolean           @default(false)
+  airbox             Boolean           @default(false)
+  expedited          Boolean           @default(false)
+  direction          ShipmentDirection @default(OUTBOUND)
+  type               ShipmentType      @default(ACCESS)
+  status             ShipmentStatus    @default(PRETRANSIT)
+  width              Float
+  height             Float
+  depth              Float
+  weight             Float
+  insurance          Float
+  labelURL           String            @map("label_url")
+  labelZPL           String            @map("label_zpl")
+  publicURL          String            @map("public_url")
+  trackingCode       String            @map("tracking_code")
+  uspsZone           String            @map("usps_zone")
+  refundStatus       String            @map("refund_status")
+  carrierDeliveredAt DateTime          @map("carrier_delivered_at")
+  carrierReceivedAt  DateTime          @map("carrier_received_at")
+  estDeliveryDate    DateTime          @map("est_delivery_date")
+  created            DateTime          @default(now())
+  easyPostId         String            @map("easy_post_id")
+  userId             String            @map("user_id")
+  addressId          String            @map("address_id")
+  address            Address           @relation(fields: [addressId], references: [id])
+  warehouseId        String            @map("warehouse_id")
+  warehouse          Warehouse         @relation(fields: [warehouseId], references: [id])
+  inventory          Inventory[]       @relation("shipment_inventory", references: [id])
+
+  @@map("shipment")
+}
+
+model Order {
+  id        String      @default(cuid()) @id
+  products  Product[]   @relation("order_product", references: [id])
+  inventory Inventory[] @relation("order_inventory", references: [id])
+  created   DateTime    @default(now())
+  canceled  DateTime
+  completed DateTime
+  confirmed DateTime
+  shipKit   Boolean
+  airbox    Boolean
+  coupon    String
+  plan      String
+  expedited Boolean
+  userId    String      @map("user_id")
+  productId String?
+
+  @@map("order")
+}
