@@ -1,10 +1,16 @@
-import { makeSchema, fieldAuthorizePlugin } from '@nexus/schema';
-import * as User from './User';
+import { fieldAuthorizePlugin, makeSchema } from '@nexus/schema';
+import { nexusPrismaPlugin } from 'nexus-prisma';
 import path from 'path';
 
+import * as Brand from './Brand';
+import * as Category from './Category';
+import * as Product from './Product';
+import * as Query from './Query';
+import * as User from './User';
+
 export const schema = makeSchema({
-  types: [User],
-  plugins: [fieldAuthorizePlugin({})],
+  types: [Brand, Category, Query, Product, User],
+  plugins: [fieldAuthorizePlugin({}), nexusPrismaPlugin()],
   outputs: {
     // I tend to use `.gen` to denote "auto-generated" files, but this is not a requirement.
     schema: path.join(__dirname, 'generated/schema.gen.graphql'),

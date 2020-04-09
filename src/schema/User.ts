@@ -1,19 +1,4 @@
-import { extendType, objectType } from '@nexus/schema';
-
-export const Query = extendType({
-  type: 'Query',
-  definition(t) {
-    t.field('user', {
-      type: 'User',
-      resolve() {
-        return {
-          active: true,
-          email: 'newton@prisma.io',
-        };
-      },
-    });
-  },
-});
+import { objectType } from '@nexus/schema';
 
 export const User = objectType({
   name: 'User',

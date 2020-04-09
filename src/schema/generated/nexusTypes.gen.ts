@@ -3,23 +3,58 @@
  * Do not make changes to this file directly
  */
 
-import { FieldAuthorizeResolver } from '@nexus/schema/dist/plugins/fieldAuthorizePlugin';
+
+import { FieldAuthorizeResolver } from "@nexus/schema/dist/plugins/fieldAuthorizePlugin"
+
+
+declare global {
+  interface NexusGenCustomOutputProperties<TypeName extends string> {
+    crud: NexusPrisma<TypeName, 'crud'>
+    model: NexusPrisma<TypeName, 'model'>
+  }
+}
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {}
+export interface NexusGenInputs {
+  BrandWhereUniqueInput: { // input type
+    id?: string | null; // String
+    slug?: string | null; // String
+  }
+  CategoryWhereUniqueInput: { // input type
+    id?: string | null; // String
+    slug?: string | null; // String
+  }
+  ProductWhereUniqueInput: { // input type
+    id?: string | null; // String
+    slug?: string | null; // String
+  }
+}
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+}
 
 export interface NexusGenRootTypes {
+  Brand: { // root type
+    id: string; // String!
+    name: string; // String!
+  }
+  Category: { // root type
+    id: string; // String!
+    name: string; // String!
+    parentId: string; // String!
+  }
+  Product: { // root type
+    id: string; // String!
+    name: string; // String!
+  }
   Query: {};
-  User: {
-    // root type
+  User: { // root type
     active: boolean; // Boolean!
     email: string; // String!
-  };
+  }
   String: string;
   Int: number;
   Float: number;
@@ -27,35 +62,89 @@ export interface NexusGenRootTypes {
   ID: string;
 }
 
-export interface NexusGenAllTypes extends NexusGenRootTypes {}
-
-export interface NexusGenFieldTypes {
-  Query: {
-    // field return type
-    user: NexusGenRootTypes['User']; // User!
-  };
-  User: {
-    // field return type
-    active: boolean; // Boolean!
-    email: string; // String!
-  };
+export interface NexusGenAllTypes extends NexusGenRootTypes {
+  BrandWhereUniqueInput: NexusGenInputs['BrandWhereUniqueInput'];
+  CategoryWhereUniqueInput: NexusGenInputs['CategoryWhereUniqueInput'];
+  ProductWhereUniqueInput: NexusGenInputs['ProductWhereUniqueInput'];
 }
 
-export interface NexusGenArgTypes {}
+export interface NexusGenFieldTypes {
+  Brand: { // field return type
+    id: string; // String!
+    name: string; // String!
+  }
+  Category: { // field return type
+    id: string; // String!
+    name: string; // String!
+    parentId: string; // String!
+  }
+  Product: { // field return type
+    id: string; // String!
+    name: string; // String!
+  }
+  Query: { // field return type
+    brand: NexusGenRootTypes['Brand'] | null; // Brand
+    brands: NexusGenRootTypes['Brand'][]; // [Brand!]!
+    categories: NexusGenRootTypes['Category'][]; // [Category!]!
+    category: NexusGenRootTypes['Category'] | null; // Category
+    product: NexusGenRootTypes['Product'] | null; // Product
+    products: NexusGenRootTypes['Product'][]; // [Product!]!
+  }
+  User: { // field return type
+    active: boolean; // Boolean!
+    email: string; // String!
+  }
+}
 
-export interface NexusGenAbstractResolveReturnTypes {}
+export interface NexusGenArgTypes {
+  Query: {
+    brand: { // args
+      where: NexusGenInputs['BrandWhereUniqueInput']; // BrandWhereUniqueInput!
+    }
+    brands: { // args
+      after?: NexusGenInputs['BrandWhereUniqueInput'] | null; // BrandWhereUniqueInput
+      before?: NexusGenInputs['BrandWhereUniqueInput'] | null; // BrandWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    categories: { // args
+      after?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+      before?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    category: { // args
+      where: NexusGenInputs['CategoryWhereUniqueInput']; // CategoryWhereUniqueInput!
+    }
+    product: { // args
+      where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
+    }
+    products: { // args
+      after?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      before?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
+}
+
+export interface NexusGenAbstractResolveReturnTypes {
+}
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = 'Query' | 'User';
+export type NexusGenObjectNames = "Brand" | "Category" | "Product" | "Query" | "User";
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = "BrandWhereUniqueInput" | "CategoryWhereUniqueInput" | "ProductWhereUniqueInput";
 
 export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = 'Boolean' | 'Float' | 'ID' | 'Int' | 'String';
+export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 
@@ -74,19 +163,16 @@ export interface NexusGenTypes {
   scalarNames: NexusGenScalarNames;
   unionNames: NexusGenUnionNames;
   allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
-  allOutputTypes:
-    | NexusGenTypes['objectNames']
-    | NexusGenTypes['enumNames']
-    | NexusGenTypes['unionNames']
-    | NexusGenTypes['interfaceNames']
-    | NexusGenTypes['scalarNames'];
-  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes'];
+  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
+  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractResolveReturn: NexusGenAbstractResolveReturnTypes;
 }
 
+
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
     /**
      * Authorization for an individual field. Returning "true"
@@ -96,7 +182,8 @@ declare global {
      * Returning or throwing an error will also prevent the
      * resolver from executing.
      */
-    authorize?: FieldAuthorizeResolver<TypeName, FieldName>;
+    authorize?: FieldAuthorizeResolver<TypeName, FieldName>
   }
-  interface NexusGenPluginSchemaConfig {}
+  interface NexusGenPluginSchemaConfig {
+  }
 }

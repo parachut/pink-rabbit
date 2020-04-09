@@ -13,7 +13,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-gql": "^0.0.4",
-    "graphql-playground-middleware-express": "^1.7.12"
+    "graphql-playground-middleware-express": "^1.7.12",
+    "nexus-prisma": "^0.12.0"
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.2",
@@ -27,6 +28,11 @@
     "prettier": "^2.0.4"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/index.ts"
+    "dev": "ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/index.ts",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only path/to/schema/module",
+    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "postinstall": "npm -s run generate",
+    "build": "npm -s run generate && tsc"
   }
 }
