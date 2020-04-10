@@ -19,21 +19,696 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  AddressCreateOneWithoutShipmentsInput: { // input type
+    connect?: NexusGenInputs['AddressWhereUniqueInput'] | null; // AddressWhereUniqueInput
+    create?: NexusGenInputs['AddressCreateWithoutShipmentsInput'] | null; // AddressCreateWithoutShipmentsInput
+  }
+  AddressCreateWithoutShipmentsInput: { // input type
+    carrierFacility: string; // String!
+    city: string; // String!
+    company: string; // String!
+    country: string; // String!
+    created?: any | null; // DateTime
+    easyPostId: string; // String!
+    email: string; // String!
+    id?: string | null; // String
+    name: string; // String!
+    phone: string; // String!
+    residential: boolean; // Boolean!
+    state: string; // String!
+    street1: string; // String!
+    street2: string; // String!
+    userId: string; // String!
+    zip: string; // String!
+  }
+  AddressWhereInput: { // input type
+    AND?: NexusGenInputs['AddressWhereInput'][] | null; // [AddressWhereInput!]
+    carrierFacility?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    city?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    company?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    country?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    easyPostId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    email?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['AddressWhereInput'][] | null; // [AddressWhereInput!]
+    OR?: NexusGenInputs['AddressWhereInput'][] | null; // [AddressWhereInput!]
+    phone?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    residential?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    shipments?: NexusGenInputs['ShipmentFilter'] | null; // ShipmentFilter
+    state?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    street1?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    street2?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    userId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    zip?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  AddressWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  BinCreateOneWithoutInventoryInput: { // input type
+    connect?: NexusGenInputs['BinWhereUniqueInput'] | null; // BinWhereUniqueInput
+    create?: NexusGenInputs['BinCreateWithoutInventoryInput'] | null; // BinCreateWithoutInventoryInput
+  }
+  BinCreateWithoutInventoryInput: { // input type
+    cell: number; // Int!
+    column: number; // Int!
+    created?: any | null; // DateTime
+    freeNodes?: NexusGenInputs['BinFreeNodeCreateManyWithoutBinInput'] | null; // BinFreeNodeCreateManyWithoutBinInput
+    height: number; // Float!
+    id?: string | null; // String
+    location: number; // Int!
+    row: number; // Int!
+    width: number; // Float!
+  }
+  BinFreeNodeCreateManyWithoutBinInput: { // input type
+    connect?: NexusGenInputs['BinFreeNodeWhereUniqueInput'][] | null; // [BinFreeNodeWhereUniqueInput!]
+    create?: NexusGenInputs['BinFreeNodeCreateWithoutBinInput'][] | null; // [BinFreeNodeCreateWithoutBinInput!]
+  }
+  BinFreeNodeCreateWithoutBinInput: { // input type
+    created?: any | null; // DateTime
+    height: number; // Float!
+    id?: string | null; // String
+    width: number; // Float!
+    x: number; // Float!
+    y: number; // Float!
+  }
+  BinFreeNodeFilter: { // input type
+    every?: NexusGenInputs['BinFreeNodeWhereInput'] | null; // BinFreeNodeWhereInput
+    none?: NexusGenInputs['BinFreeNodeWhereInput'] | null; // BinFreeNodeWhereInput
+    some?: NexusGenInputs['BinFreeNodeWhereInput'] | null; // BinFreeNodeWhereInput
+  }
+  BinFreeNodeWhereInput: { // input type
+    AND?: NexusGenInputs['BinFreeNodeWhereInput'][] | null; // [BinFreeNodeWhereInput!]
+    bin?: NexusGenInputs['BinWhereInput'] | null; // BinWhereInput
+    binId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    height?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['BinFreeNodeWhereInput'][] | null; // [BinFreeNodeWhereInput!]
+    OR?: NexusGenInputs['BinFreeNodeWhereInput'][] | null; // [BinFreeNodeWhereInput!]
+    width?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    x?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    y?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+  }
+  BinFreeNodeWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  BinWhereInput: { // input type
+    AND?: NexusGenInputs['BinWhereInput'][] | null; // [BinWhereInput!]
+    cell?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    column?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    freeNodes?: NexusGenInputs['BinFreeNodeFilter'] | null; // BinFreeNodeFilter
+    height?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    inventory?: NexusGenInputs['InventoryFilter'] | null; // InventoryFilter
+    location?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    NOT?: NexusGenInputs['BinWhereInput'][] | null; // [BinWhereInput!]
+    OR?: NexusGenInputs['BinWhereInput'][] | null; // [BinWhereInput!]
+    row?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    width?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+  }
+  BinWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  BooleanFilter: { // input type
+    equals?: boolean | null; // Boolean
+    not?: boolean | null; // Boolean
+  }
+  BrandCreateOneWithoutProductsInput: { // input type
+    connect?: NexusGenInputs['BrandWhereUniqueInput'] | null; // BrandWhereUniqueInput
+    create?: NexusGenInputs['BrandCreateWithoutProductsInput'] | null; // BrandCreateWithoutProductsInput
+  }
+  BrandCreateWithoutProductsInput: { // input type
+    created?: any | null; // DateTime
+    description: string; // String!
+    founded: any; // DateTime!
+    id?: string | null; // String
+    name: string; // String!
+    slug: string; // String!
+  }
+  BrandWhereInput: { // input type
+    AND?: NexusGenInputs['BrandWhereInput'][] | null; // [BrandWhereInput!]
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    founded?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['BrandWhereInput'][] | null; // [BrandWhereInput!]
+    OR?: NexusGenInputs['BrandWhereInput'][] | null; // [BrandWhereInput!]
+    products?: NexusGenInputs['ProductFilter'] | null; // ProductFilter
+    slug?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
   BrandWhereUniqueInput: { // input type
     id?: string | null; // String
     slug?: string | null; // String
+  }
+  CategoryCreateOneWithoutProductsInput: { // input type
+    connect?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+    create?: NexusGenInputs['CategoryCreateWithoutProductsInput'] | null; // CategoryCreateWithoutProductsInput
+  }
+  CategoryCreateWithoutProductsInput: { // input type
+    created?: any | null; // DateTime
+    description: string; // String!
+    id?: string | null; // String
+    name: string; // String!
+    parentId: string; // String!
+    slug: string; // String!
+  }
+  CategoryWhereInput: { // input type
+    AND?: NexusGenInputs['CategoryWhereInput'][] | null; // [CategoryWhereInput!]
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['CategoryWhereInput'][] | null; // [CategoryWhereInput!]
+    OR?: NexusGenInputs['CategoryWhereInput'][] | null; // [CategoryWhereInput!]
+    parentId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    products?: NexusGenInputs['ProductFilter'] | null; // ProductFilter
+    slug?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   CategoryWhereUniqueInput: { // input type
     id?: string | null; // String
     slug?: string | null; // String
   }
+  DateTimeFilter: { // input type
+    equals?: any | null; // DateTime
+    gt?: any | null; // DateTime
+    gte?: any | null; // DateTime
+    in?: any[] | null; // [DateTime!]
+    lt?: any | null; // DateTime
+    lte?: any | null; // DateTime
+    not?: any | null; // DateTime
+    notIn?: any[] | null; // [DateTime!]
+  }
+  FloatFilter: { // input type
+    equals?: number | null; // Float
+    gt?: number | null; // Float
+    gte?: number | null; // Float
+    in?: number[] | null; // [Float!]
+    lt?: number | null; // Float
+    lte?: number | null; // Float
+    not?: number | null; // Float
+    notIn?: number[] | null; // [Float!]
+  }
+  IntFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: number | null; // Int
+    notIn?: number[] | null; // [Int!]
+  }
+  InventoryCreateManyWithoutOrdersInput: { // input type
+    connect?: NexusGenInputs['InventoryWhereUniqueInput'][] | null; // [InventoryWhereUniqueInput!]
+    create?: NexusGenInputs['InventoryCreateWithoutOrdersInput'][] | null; // [InventoryCreateWithoutOrdersInput!]
+  }
+  InventoryCreateManyWithoutProductInput: { // input type
+    connect?: NexusGenInputs['InventoryWhereUniqueInput'][] | null; // [InventoryWhereUniqueInput!]
+    create?: NexusGenInputs['InventoryCreateWithoutProductInput'][] | null; // [InventoryCreateWithoutProductInput!]
+  }
+  InventoryCreateManyWithoutShipmentsInput: { // input type
+    connect?: NexusGenInputs['InventoryWhereUniqueInput'][] | null; // [InventoryWhereUniqueInput!]
+    create?: NexusGenInputs['InventoryCreateWithoutShipmentsInput'][] | null; // [InventoryCreateWithoutShipmentsInput!]
+  }
+  InventoryCreateWithoutOrdersInput: { // input type
+    active?: boolean | null; // Boolean
+    bin: NexusGenInputs['BinCreateOneWithoutInventoryInput']; // BinCreateOneWithoutInventoryInput!
+    condition?: NexusGenEnums['InventoryCondition'] | null; // InventoryCondition
+    created?: any | null; // DateTime
+    id?: string | null; // String
+    includedEssentials?: NexusGenInputs['InventoryCreateincludedEssentialsInput'] | null; // InventoryCreateincludedEssentialsInput
+    memberId: string; // String!
+    product: NexusGenInputs['ProductCreateOneWithoutInventoryInput']; // ProductCreateOneWithoutInventoryInput!
+    return?: boolean | null; // Boolean
+    returnReason: string; // String!
+    serial: string; // String!
+    shipments?: NexusGenInputs['ShipmentCreateManyWithoutInventoryInput'] | null; // ShipmentCreateManyWithoutInventoryInput
+    sku: string; // String!
+    status?: NexusGenEnums['InventoryStatus'] | null; // InventoryStatus
+    userId: string; // String!
+  }
+  InventoryCreateWithoutProductInput: { // input type
+    active?: boolean | null; // Boolean
+    bin: NexusGenInputs['BinCreateOneWithoutInventoryInput']; // BinCreateOneWithoutInventoryInput!
+    condition?: NexusGenEnums['InventoryCondition'] | null; // InventoryCondition
+    created?: any | null; // DateTime
+    id?: string | null; // String
+    includedEssentials?: NexusGenInputs['InventoryCreateincludedEssentialsInput'] | null; // InventoryCreateincludedEssentialsInput
+    memberId: string; // String!
+    orders?: NexusGenInputs['OrderCreateManyWithoutInventoryInput'] | null; // OrderCreateManyWithoutInventoryInput
+    return?: boolean | null; // Boolean
+    returnReason: string; // String!
+    serial: string; // String!
+    shipments?: NexusGenInputs['ShipmentCreateManyWithoutInventoryInput'] | null; // ShipmentCreateManyWithoutInventoryInput
+    sku: string; // String!
+    status?: NexusGenEnums['InventoryStatus'] | null; // InventoryStatus
+    userId: string; // String!
+  }
+  InventoryCreateWithoutShipmentsInput: { // input type
+    active?: boolean | null; // Boolean
+    bin: NexusGenInputs['BinCreateOneWithoutInventoryInput']; // BinCreateOneWithoutInventoryInput!
+    condition?: NexusGenEnums['InventoryCondition'] | null; // InventoryCondition
+    created?: any | null; // DateTime
+    id?: string | null; // String
+    includedEssentials?: NexusGenInputs['InventoryCreateincludedEssentialsInput'] | null; // InventoryCreateincludedEssentialsInput
+    memberId: string; // String!
+    orders?: NexusGenInputs['OrderCreateManyWithoutInventoryInput'] | null; // OrderCreateManyWithoutInventoryInput
+    product: NexusGenInputs['ProductCreateOneWithoutInventoryInput']; // ProductCreateOneWithoutInventoryInput!
+    return?: boolean | null; // Boolean
+    returnReason: string; // String!
+    serial: string; // String!
+    sku: string; // String!
+    status?: NexusGenEnums['InventoryStatus'] | null; // InventoryStatus
+    userId: string; // String!
+  }
+  InventoryCreateincludedEssentialsInput: { // input type
+    set?: string[] | null; // [String!]
+  }
+  InventoryFilter: { // input type
+    every?: NexusGenInputs['InventoryWhereInput'] | null; // InventoryWhereInput
+    none?: NexusGenInputs['InventoryWhereInput'] | null; // InventoryWhereInput
+    some?: NexusGenInputs['InventoryWhereInput'] | null; // InventoryWhereInput
+  }
+  InventoryWhereInput: { // input type
+    active?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    AND?: NexusGenInputs['InventoryWhereInput'][] | null; // [InventoryWhereInput!]
+    bin?: NexusGenInputs['BinWhereInput'] | null; // BinWhereInput
+    binId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    condition?: NexusGenEnums['InventoryCondition'] | null; // InventoryCondition
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    memberId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['InventoryWhereInput'][] | null; // [InventoryWhereInput!]
+    OR?: NexusGenInputs['InventoryWhereInput'][] | null; // [InventoryWhereInput!]
+    orders?: NexusGenInputs['OrderFilter'] | null; // OrderFilter
+    product?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
+    productId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    return?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    returnReason?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    serial?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    shipments?: NexusGenInputs['ShipmentFilter'] | null; // ShipmentFilter
+    sku?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    status?: NexusGenEnums['InventoryStatus'] | null; // InventoryStatus
+    userId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  InventoryWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  NullableStringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: string | null; // String
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
+  OrderCreateManyWithoutInventoryInput: { // input type
+    connect?: NexusGenInputs['OrderWhereUniqueInput'][] | null; // [OrderWhereUniqueInput!]
+    create?: NexusGenInputs['OrderCreateWithoutInventoryInput'][] | null; // [OrderCreateWithoutInventoryInput!]
+  }
+  OrderCreateManyWithoutProductsInput: { // input type
+    connect?: NexusGenInputs['OrderWhereUniqueInput'][] | null; // [OrderWhereUniqueInput!]
+    create?: NexusGenInputs['OrderCreateWithoutProductsInput'][] | null; // [OrderCreateWithoutProductsInput!]
+  }
+  OrderCreateWithoutInventoryInput: { // input type
+    airbox: boolean; // Boolean!
+    canceled: any; // DateTime!
+    completed: any; // DateTime!
+    confirmed: any; // DateTime!
+    coupon: string; // String!
+    created?: any | null; // DateTime
+    expedited: boolean; // Boolean!
+    id?: string | null; // String
+    plan: string; // String!
+    productId?: string | null; // String
+    products?: NexusGenInputs['ProductCreateManyWithoutOrdersInput'] | null; // ProductCreateManyWithoutOrdersInput
+    shipKit: boolean; // Boolean!
+    userId: string; // String!
+  }
+  OrderCreateWithoutProductsInput: { // input type
+    airbox: boolean; // Boolean!
+    canceled: any; // DateTime!
+    completed: any; // DateTime!
+    confirmed: any; // DateTime!
+    coupon: string; // String!
+    created?: any | null; // DateTime
+    expedited: boolean; // Boolean!
+    id?: string | null; // String
+    inventory?: NexusGenInputs['InventoryCreateManyWithoutOrdersInput'] | null; // InventoryCreateManyWithoutOrdersInput
+    plan: string; // String!
+    productId?: string | null; // String
+    shipKit: boolean; // Boolean!
+    userId: string; // String!
+  }
+  OrderFilter: { // input type
+    every?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
+    none?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
+    some?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
+  }
+  OrderWhereInput: { // input type
+    airbox?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    AND?: NexusGenInputs['OrderWhereInput'][] | null; // [OrderWhereInput!]
+    canceled?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    completed?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    confirmed?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    coupon?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    expedited?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    inventory?: NexusGenInputs['InventoryFilter'] | null; // InventoryFilter
+    NOT?: NexusGenInputs['OrderWhereInput'][] | null; // [OrderWhereInput!]
+    OR?: NexusGenInputs['OrderWhereInput'][] | null; // [OrderWhereInput!]
+    plan?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    productId?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
+    products?: NexusGenInputs['ProductFilter'] | null; // ProductFilter
+    shipKit?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    userId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  OrderWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  ProductCreateManyWithoutOrdersInput: { // input type
+    connect?: NexusGenInputs['ProductWhereUniqueInput'][] | null; // [ProductWhereUniqueInput!]
+    create?: NexusGenInputs['ProductCreateWithoutOrdersInput'][] | null; // [ProductCreateWithoutOrdersInput!]
+  }
+  ProductCreateOneWithoutInventoryInput: { // input type
+    connect?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+    create?: NexusGenInputs['ProductCreateWithoutInventoryInput'] | null; // ProductCreateWithoutInventoryInput
+  }
+  ProductCreateWithoutInventoryInput: { // input type
+    active?: boolean | null; // Boolean
+    brand: NexusGenInputs['BrandCreateOneWithoutProductsInput']; // BrandCreateOneWithoutProductsInput!
+    category: NexusGenInputs['CategoryCreateOneWithoutProductsInput']; // CategoryCreateOneWithoutProductsInput!
+    created?: any | null; // DateTime
+    demand: number; // Int!
+    depth: number; // Float!
+    description: string; // String!
+    elasticId: string; // String!
+    height: number; // Float!
+    id?: string | null; // String
+    images?: NexusGenInputs['ProductCreateimagesInput'] | null; // ProductCreateimagesInput
+    mfr: string; // String!
+    name: string; // String!
+    orders?: NexusGenInputs['OrderCreateManyWithoutProductsInput'] | null; // OrderCreateManyWithoutProductsInput
+    popularity: number; // Int!
+    price: number; // Float!
+    released: any; // DateTime!
+    slug: string; // String!
+    weight: number; // Float!
+    width: number; // Float!
+  }
+  ProductCreateWithoutOrdersInput: { // input type
+    active?: boolean | null; // Boolean
+    brand: NexusGenInputs['BrandCreateOneWithoutProductsInput']; // BrandCreateOneWithoutProductsInput!
+    category: NexusGenInputs['CategoryCreateOneWithoutProductsInput']; // CategoryCreateOneWithoutProductsInput!
+    created?: any | null; // DateTime
+    demand: number; // Int!
+    depth: number; // Float!
+    description: string; // String!
+    elasticId: string; // String!
+    height: number; // Float!
+    id?: string | null; // String
+    images?: NexusGenInputs['ProductCreateimagesInput'] | null; // ProductCreateimagesInput
+    inventory?: NexusGenInputs['InventoryCreateManyWithoutProductInput'] | null; // InventoryCreateManyWithoutProductInput
+    mfr: string; // String!
+    name: string; // String!
+    popularity: number; // Int!
+    price: number; // Float!
+    released: any; // DateTime!
+    slug: string; // String!
+    weight: number; // Float!
+    width: number; // Float!
+  }
+  ProductCreateimagesInput: { // input type
+    set?: string[] | null; // [String!]
+  }
+  ProductFilter: { // input type
+    every?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
+    none?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
+    some?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
+  }
+  ProductOrderByInput: { // input type
+    active?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    brand?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    brandId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    category?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    categoryId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    created?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    demand?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    depth?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    description?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    elasticId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    height?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    id?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    mfr?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    name?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    popularity?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    price?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    released?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    slug?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    weight?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    width?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+  }
+  ProductWhereInput: { // input type
+    active?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    AND?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
+    brand?: NexusGenInputs['BrandWhereInput'] | null; // BrandWhereInput
+    brandId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    category?: NexusGenInputs['CategoryWhereInput'] | null; // CategoryWhereInput
+    categoryId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    demand?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    depth?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    elasticId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    height?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    inventory?: NexusGenInputs['InventoryFilter'] | null; // InventoryFilter
+    mfr?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
+    OR?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
+    orders?: NexusGenInputs['OrderFilter'] | null; // OrderFilter
+    popularity?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    price?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    released?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    slug?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    weight?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    width?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+  }
   ProductWhereUniqueInput: { // input type
     id?: string | null; // String
     slug?: string | null; // String
   }
+  ShipmentCreateInput: { // input type
+    address: NexusGenInputs['AddressCreateOneWithoutShipmentsInput']; // AddressCreateOneWithoutShipmentsInput!
+    airbox?: boolean | null; // Boolean
+    carrierDeliveredAt: any; // DateTime!
+    carrierReceivedAt: any; // DateTime!
+    created?: any | null; // DateTime
+    depth: number; // Float!
+    direction?: NexusGenEnums['ShipmentDirection'] | null; // ShipmentDirection
+    easyPostId: string; // String!
+    estDeliveryDate: any; // DateTime!
+    expedited?: boolean | null; // Boolean
+    height: number; // Float!
+    id?: string | null; // String
+    insurance: number; // Float!
+    inventory?: NexusGenInputs['InventoryCreateManyWithoutShipmentsInput'] | null; // InventoryCreateManyWithoutShipmentsInput
+    labelURL: string; // String!
+    labelZPL: string; // String!
+    pickup?: boolean | null; // Boolean
+    publicURL: string; // String!
+    refundStatus: string; // String!
+    status?: NexusGenEnums['ShipmentStatus'] | null; // ShipmentStatus
+    trackingCode: string; // String!
+    type?: NexusGenEnums['ShipmentType'] | null; // ShipmentType
+    userId: string; // String!
+    uspsZone: string; // String!
+    warehouse: NexusGenInputs['WarehouseCreateOneWithoutShipmentInput']; // WarehouseCreateOneWithoutShipmentInput!
+    weight: number; // Float!
+    width: number; // Float!
+  }
+  ShipmentCreateManyWithoutInventoryInput: { // input type
+    connect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
+    create?: NexusGenInputs['ShipmentCreateWithoutInventoryInput'][] | null; // [ShipmentCreateWithoutInventoryInput!]
+  }
+  ShipmentCreateWithoutInventoryInput: { // input type
+    address: NexusGenInputs['AddressCreateOneWithoutShipmentsInput']; // AddressCreateOneWithoutShipmentsInput!
+    airbox?: boolean | null; // Boolean
+    carrierDeliveredAt: any; // DateTime!
+    carrierReceivedAt: any; // DateTime!
+    created?: any | null; // DateTime
+    depth: number; // Float!
+    direction?: NexusGenEnums['ShipmentDirection'] | null; // ShipmentDirection
+    easyPostId: string; // String!
+    estDeliveryDate: any; // DateTime!
+    expedited?: boolean | null; // Boolean
+    height: number; // Float!
+    id?: string | null; // String
+    insurance: number; // Float!
+    labelURL: string; // String!
+    labelZPL: string; // String!
+    pickup?: boolean | null; // Boolean
+    publicURL: string; // String!
+    refundStatus: string; // String!
+    status?: NexusGenEnums['ShipmentStatus'] | null; // ShipmentStatus
+    trackingCode: string; // String!
+    type?: NexusGenEnums['ShipmentType'] | null; // ShipmentType
+    userId: string; // String!
+    uspsZone: string; // String!
+    warehouse: NexusGenInputs['WarehouseCreateOneWithoutShipmentInput']; // WarehouseCreateOneWithoutShipmentInput!
+    weight: number; // Float!
+    width: number; // Float!
+  }
+  ShipmentFilter: { // input type
+    every?: NexusGenInputs['ShipmentWhereInput'] | null; // ShipmentWhereInput
+    none?: NexusGenInputs['ShipmentWhereInput'] | null; // ShipmentWhereInput
+    some?: NexusGenInputs['ShipmentWhereInput'] | null; // ShipmentWhereInput
+  }
+  ShipmentOrderByInput: { // input type
+    address?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    addressId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    airbox?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    carrierDeliveredAt?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    carrierReceivedAt?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    created?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    depth?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    direction?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    easyPostId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    estDeliveryDate?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    expedited?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    height?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    id?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    insurance?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    labelURL?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    labelZPL?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    pickup?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    publicURL?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    refundStatus?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    status?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    trackingCode?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    type?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    userId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    uspsZone?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    warehouse?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    warehouseId?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    weight?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+    width?: NexusGenEnums['OrderByArg'] | null; // OrderByArg
+  }
+  ShipmentWhereInput: { // input type
+    address?: NexusGenInputs['AddressWhereInput'] | null; // AddressWhereInput
+    addressId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    airbox?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    AND?: NexusGenInputs['ShipmentWhereInput'][] | null; // [ShipmentWhereInput!]
+    carrierDeliveredAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    carrierReceivedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    depth?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    direction?: NexusGenEnums['ShipmentDirection'] | null; // ShipmentDirection
+    easyPostId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    estDeliveryDate?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    expedited?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    height?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    insurance?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    inventory?: NexusGenInputs['InventoryFilter'] | null; // InventoryFilter
+    labelURL?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    labelZPL?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['ShipmentWhereInput'][] | null; // [ShipmentWhereInput!]
+    OR?: NexusGenInputs['ShipmentWhereInput'][] | null; // [ShipmentWhereInput!]
+    pickup?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    publicURL?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    refundStatus?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    status?: NexusGenEnums['ShipmentStatus'] | null; // ShipmentStatus
+    trackingCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    type?: NexusGenEnums['ShipmentType'] | null; // ShipmentType
+    userId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    uspsZone?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    warehouse?: NexusGenInputs['WarehouseWhereInput'] | null; // WarehouseWhereInput
+    warehouseId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    weight?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    width?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+  }
+  ShipmentWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  StringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: string | null; // String
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
+  WarehouseCreateOneWithoutShipmentInput: { // input type
+    connect?: NexusGenInputs['WarehouseWhereUniqueInput'] | null; // WarehouseWhereUniqueInput
+    create?: NexusGenInputs['WarehouseCreateWithoutShipmentInput'] | null; // WarehouseCreateWithoutShipmentInput
+  }
+  WarehouseCreateWithoutShipmentInput: { // input type
+    carrierFacility: string; // String!
+    city: string; // String!
+    company: string; // String!
+    country: string; // String!
+    created?: any | null; // DateTime
+    easyPostId: string; // String!
+    email: string; // String!
+    id?: string | null; // String
+    name: string; // String!
+    phone: string; // String!
+    residential: boolean; // Boolean!
+    state: string; // String!
+    street1: string; // String!
+    street2: string; // String!
+    zip: string; // String!
+  }
+  WarehouseWhereInput: { // input type
+    AND?: NexusGenInputs['WarehouseWhereInput'][] | null; // [WarehouseWhereInput!]
+    carrierFacility?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    city?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    company?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    country?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    created?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    easyPostId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    email?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['WarehouseWhereInput'][] | null; // [WarehouseWhereInput!]
+    OR?: NexusGenInputs['WarehouseWhereInput'][] | null; // [WarehouseWhereInput!]
+    phone?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    residential?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    shipment?: NexusGenInputs['ShipmentFilter'] | null; // ShipmentFilter
+    state?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    street1?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    street2?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    zip?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  WarehouseWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
+  InventoryCondition: "DAMAGED" | "EXCELLENT" | "LIKENEW" | "NEW" | "USED"
+  InventoryStatus: "ACCEPTED" | "ENROUTEMEMBER" | "ENROUTEOWNER" | "ENROUTEWAREHOUSE" | "INSPECTING" | "INWAREHOUSE" | "LOST" | "NEW" | "OUTOFSERVICE" | "PENDING" | "RETURNED" | "RETURNING" | "SHIPMENTPREP" | "STOLEN" | "WITHMEMBER"
+  OrderByArg: "asc" | "desc"
+  ShipmentDirection: "INBOUND" | "OUTBOUND"
+  ShipmentStatus: "AVAILABLEFORPICKUP" | "CANCELLED" | "DELIVERED" | "ERROR" | "FAILURE" | "INTRANSIT" | "OUTFORDELIVERY" | "PRETRANSIT" | "RETURNTOSENDER" | "UNKNOWN"
+  ShipmentType: "ACCESS" | "EARN"
 }
 
 export interface NexusGenRootTypes {
@@ -46,11 +721,16 @@ export interface NexusGenRootTypes {
     name: string; // String!
     parentId: string; // String!
   }
+  Mutation: {};
   Product: { // root type
     id: string; // String!
     name: string; // String!
   }
   Query: {};
+  Shipment: { // root type
+    id: string; // String!
+    trackingCode: string; // String!
+  }
   User: { // root type
     active: boolean; // Boolean!
     email: string; // String!
@@ -60,12 +740,80 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  AddressCreateOneWithoutShipmentsInput: NexusGenInputs['AddressCreateOneWithoutShipmentsInput'];
+  AddressCreateWithoutShipmentsInput: NexusGenInputs['AddressCreateWithoutShipmentsInput'];
+  AddressWhereInput: NexusGenInputs['AddressWhereInput'];
+  AddressWhereUniqueInput: NexusGenInputs['AddressWhereUniqueInput'];
+  BinCreateOneWithoutInventoryInput: NexusGenInputs['BinCreateOneWithoutInventoryInput'];
+  BinCreateWithoutInventoryInput: NexusGenInputs['BinCreateWithoutInventoryInput'];
+  BinFreeNodeCreateManyWithoutBinInput: NexusGenInputs['BinFreeNodeCreateManyWithoutBinInput'];
+  BinFreeNodeCreateWithoutBinInput: NexusGenInputs['BinFreeNodeCreateWithoutBinInput'];
+  BinFreeNodeFilter: NexusGenInputs['BinFreeNodeFilter'];
+  BinFreeNodeWhereInput: NexusGenInputs['BinFreeNodeWhereInput'];
+  BinFreeNodeWhereUniqueInput: NexusGenInputs['BinFreeNodeWhereUniqueInput'];
+  BinWhereInput: NexusGenInputs['BinWhereInput'];
+  BinWhereUniqueInput: NexusGenInputs['BinWhereUniqueInput'];
+  BooleanFilter: NexusGenInputs['BooleanFilter'];
+  BrandCreateOneWithoutProductsInput: NexusGenInputs['BrandCreateOneWithoutProductsInput'];
+  BrandCreateWithoutProductsInput: NexusGenInputs['BrandCreateWithoutProductsInput'];
+  BrandWhereInput: NexusGenInputs['BrandWhereInput'];
   BrandWhereUniqueInput: NexusGenInputs['BrandWhereUniqueInput'];
+  CategoryCreateOneWithoutProductsInput: NexusGenInputs['CategoryCreateOneWithoutProductsInput'];
+  CategoryCreateWithoutProductsInput: NexusGenInputs['CategoryCreateWithoutProductsInput'];
+  CategoryWhereInput: NexusGenInputs['CategoryWhereInput'];
   CategoryWhereUniqueInput: NexusGenInputs['CategoryWhereUniqueInput'];
+  DateTimeFilter: NexusGenInputs['DateTimeFilter'];
+  FloatFilter: NexusGenInputs['FloatFilter'];
+  IntFilter: NexusGenInputs['IntFilter'];
+  InventoryCreateManyWithoutOrdersInput: NexusGenInputs['InventoryCreateManyWithoutOrdersInput'];
+  InventoryCreateManyWithoutProductInput: NexusGenInputs['InventoryCreateManyWithoutProductInput'];
+  InventoryCreateManyWithoutShipmentsInput: NexusGenInputs['InventoryCreateManyWithoutShipmentsInput'];
+  InventoryCreateWithoutOrdersInput: NexusGenInputs['InventoryCreateWithoutOrdersInput'];
+  InventoryCreateWithoutProductInput: NexusGenInputs['InventoryCreateWithoutProductInput'];
+  InventoryCreateWithoutShipmentsInput: NexusGenInputs['InventoryCreateWithoutShipmentsInput'];
+  InventoryCreateincludedEssentialsInput: NexusGenInputs['InventoryCreateincludedEssentialsInput'];
+  InventoryFilter: NexusGenInputs['InventoryFilter'];
+  InventoryWhereInput: NexusGenInputs['InventoryWhereInput'];
+  InventoryWhereUniqueInput: NexusGenInputs['InventoryWhereUniqueInput'];
+  NullableStringFilter: NexusGenInputs['NullableStringFilter'];
+  OrderCreateManyWithoutInventoryInput: NexusGenInputs['OrderCreateManyWithoutInventoryInput'];
+  OrderCreateManyWithoutProductsInput: NexusGenInputs['OrderCreateManyWithoutProductsInput'];
+  OrderCreateWithoutInventoryInput: NexusGenInputs['OrderCreateWithoutInventoryInput'];
+  OrderCreateWithoutProductsInput: NexusGenInputs['OrderCreateWithoutProductsInput'];
+  OrderFilter: NexusGenInputs['OrderFilter'];
+  OrderWhereInput: NexusGenInputs['OrderWhereInput'];
+  OrderWhereUniqueInput: NexusGenInputs['OrderWhereUniqueInput'];
+  ProductCreateManyWithoutOrdersInput: NexusGenInputs['ProductCreateManyWithoutOrdersInput'];
+  ProductCreateOneWithoutInventoryInput: NexusGenInputs['ProductCreateOneWithoutInventoryInput'];
+  ProductCreateWithoutInventoryInput: NexusGenInputs['ProductCreateWithoutInventoryInput'];
+  ProductCreateWithoutOrdersInput: NexusGenInputs['ProductCreateWithoutOrdersInput'];
+  ProductCreateimagesInput: NexusGenInputs['ProductCreateimagesInput'];
+  ProductFilter: NexusGenInputs['ProductFilter'];
+  ProductOrderByInput: NexusGenInputs['ProductOrderByInput'];
+  ProductWhereInput: NexusGenInputs['ProductWhereInput'];
   ProductWhereUniqueInput: NexusGenInputs['ProductWhereUniqueInput'];
+  ShipmentCreateInput: NexusGenInputs['ShipmentCreateInput'];
+  ShipmentCreateManyWithoutInventoryInput: NexusGenInputs['ShipmentCreateManyWithoutInventoryInput'];
+  ShipmentCreateWithoutInventoryInput: NexusGenInputs['ShipmentCreateWithoutInventoryInput'];
+  ShipmentFilter: NexusGenInputs['ShipmentFilter'];
+  ShipmentOrderByInput: NexusGenInputs['ShipmentOrderByInput'];
+  ShipmentWhereInput: NexusGenInputs['ShipmentWhereInput'];
+  ShipmentWhereUniqueInput: NexusGenInputs['ShipmentWhereUniqueInput'];
+  StringFilter: NexusGenInputs['StringFilter'];
+  WarehouseCreateOneWithoutShipmentInput: NexusGenInputs['WarehouseCreateOneWithoutShipmentInput'];
+  WarehouseCreateWithoutShipmentInput: NexusGenInputs['WarehouseCreateWithoutShipmentInput'];
+  WarehouseWhereInput: NexusGenInputs['WarehouseWhereInput'];
+  WarehouseWhereUniqueInput: NexusGenInputs['WarehouseWhereUniqueInput'];
+  InventoryCondition: NexusGenEnums['InventoryCondition'];
+  InventoryStatus: NexusGenEnums['InventoryStatus'];
+  OrderByArg: NexusGenEnums['OrderByArg'];
+  ShipmentDirection: NexusGenEnums['ShipmentDirection'];
+  ShipmentStatus: NexusGenEnums['ShipmentStatus'];
+  ShipmentType: NexusGenEnums['ShipmentType'];
 }
 
 export interface NexusGenFieldTypes {
@@ -78,6 +826,9 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     parentId: string; // String!
   }
+  Mutation: { // field return type
+    createOneShipment: NexusGenRootTypes['Shipment']; // Shipment!
+  }
   Product: { // field return type
     id: string; // String!
     name: string; // String!
@@ -89,6 +840,12 @@ export interface NexusGenFieldTypes {
     category: NexusGenRootTypes['Category'] | null; // Category
     product: NexusGenRootTypes['Product'] | null; // Product
     products: NexusGenRootTypes['Product'][]; // [Product!]!
+    shipment: NexusGenRootTypes['Shipment'] | null; // Shipment
+    shipments: NexusGenRootTypes['Shipment'][]; // [Shipment!]!
+  }
+  Shipment: { // field return type
+    id: string; // String!
+    trackingCode: string; // String!
   }
   User: { // field return type
     active: boolean; // Boolean!
@@ -97,6 +854,11 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createOneShipment: { // args
+      data: NexusGenInputs['ShipmentCreateInput']; // ShipmentCreateInput!
+    }
+  }
   Query: {
     brand: { // args
       where: NexusGenInputs['BrandWhereUniqueInput']; // BrandWhereUniqueInput!
@@ -126,7 +888,21 @@ export interface NexusGenArgTypes {
       before?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
+      orderBy?: NexusGenInputs['ProductOrderByInput'] | null; // ProductOrderByInput
       skip?: number | null; // Int
+      where?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
+    }
+    shipment: { // args
+      where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+    }
+    shipments: { // args
+      after?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
+      before?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenInputs['ShipmentOrderByInput'] | null; // ShipmentOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['ShipmentWhereInput'] | null; // ShipmentWhereInput
     }
   }
 }
@@ -136,15 +912,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Brand" | "Category" | "Product" | "Query" | "User";
+export type NexusGenObjectNames = "Brand" | "Category" | "Mutation" | "Product" | "Query" | "Shipment" | "User";
 
-export type NexusGenInputNames = "BrandWhereUniqueInput" | "CategoryWhereUniqueInput" | "ProductWhereUniqueInput";
+export type NexusGenInputNames = "AddressCreateOneWithoutShipmentsInput" | "AddressCreateWithoutShipmentsInput" | "AddressWhereInput" | "AddressWhereUniqueInput" | "BinCreateOneWithoutInventoryInput" | "BinCreateWithoutInventoryInput" | "BinFreeNodeCreateManyWithoutBinInput" | "BinFreeNodeCreateWithoutBinInput" | "BinFreeNodeFilter" | "BinFreeNodeWhereInput" | "BinFreeNodeWhereUniqueInput" | "BinWhereInput" | "BinWhereUniqueInput" | "BooleanFilter" | "BrandCreateOneWithoutProductsInput" | "BrandCreateWithoutProductsInput" | "BrandWhereInput" | "BrandWhereUniqueInput" | "CategoryCreateOneWithoutProductsInput" | "CategoryCreateWithoutProductsInput" | "CategoryWhereInput" | "CategoryWhereUniqueInput" | "DateTimeFilter" | "FloatFilter" | "IntFilter" | "InventoryCreateManyWithoutOrdersInput" | "InventoryCreateManyWithoutProductInput" | "InventoryCreateManyWithoutShipmentsInput" | "InventoryCreateWithoutOrdersInput" | "InventoryCreateWithoutProductInput" | "InventoryCreateWithoutShipmentsInput" | "InventoryCreateincludedEssentialsInput" | "InventoryFilter" | "InventoryWhereInput" | "InventoryWhereUniqueInput" | "NullableStringFilter" | "OrderCreateManyWithoutInventoryInput" | "OrderCreateManyWithoutProductsInput" | "OrderCreateWithoutInventoryInput" | "OrderCreateWithoutProductsInput" | "OrderFilter" | "OrderWhereInput" | "OrderWhereUniqueInput" | "ProductCreateManyWithoutOrdersInput" | "ProductCreateOneWithoutInventoryInput" | "ProductCreateWithoutInventoryInput" | "ProductCreateWithoutOrdersInput" | "ProductCreateimagesInput" | "ProductFilter" | "ProductOrderByInput" | "ProductWhereInput" | "ProductWhereUniqueInput" | "ShipmentCreateInput" | "ShipmentCreateManyWithoutInventoryInput" | "ShipmentCreateWithoutInventoryInput" | "ShipmentFilter" | "ShipmentOrderByInput" | "ShipmentWhereInput" | "ShipmentWhereUniqueInput" | "StringFilter" | "WarehouseCreateOneWithoutShipmentInput" | "WarehouseCreateWithoutShipmentInput" | "WarehouseWhereInput" | "WarehouseWhereUniqueInput";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "InventoryCondition" | "InventoryStatus" | "OrderByArg" | "ShipmentDirection" | "ShipmentStatus" | "ShipmentType";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 
