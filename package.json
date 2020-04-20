@@ -10,11 +10,16 @@
     "@okta/okta-sdk-nodejs": "^3.2.0",
     "@prisma/client": "^2.0.0-beta.2",
     "body-parser": "^1.19.0",
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-gql": "^0.0.4",
+    "graphql-middleware": "^4.0.2",
     "graphql-playground-middleware-express": "^1.7.12",
-    "nexus-prisma": "^0.12.0"
+    "graphql-shield": "^7.2.5",
+    "knex": "^0.20.13",
+    "nexus-prisma": "^0.12.0",
+    "pg": "^8.0.2"
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.2",
@@ -29,10 +34,11 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./src/index.ts",
-    "generate:prisma": "prisma generate",
-    "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only path/to/schema/module",
+    "generate:prisma": "npx prisma generate",
+    "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only ./src/schema",
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "postinstall": "npm -s run generate",
+    "migrate": "ts-node-dev ./src/migrate.ts",
     "build": "npm -s run generate && tsc"
   }
 }

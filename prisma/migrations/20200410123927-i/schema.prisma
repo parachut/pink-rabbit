@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -263,5 +263,5 @@ model OrderItem {
   orderId   String   @map("order_id")
   created   DateTime @default(now())
 
-  @@map("order_item")
+  @@map("order")
 }

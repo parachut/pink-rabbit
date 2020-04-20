@@ -10,8 +10,8 @@ input AddressCreateOneWithoutShipmentsInput {
 input AddressCreateWithoutShipmentsInput {
   carrierFacility: String!
   city: String!
-  company: String!
-  country: String!
+  company: String
+  country: String
   created: DateTime
   easyPostId: String!
   email: String!
@@ -21,7 +21,7 @@ input AddressCreateWithoutShipmentsInput {
   residential: Boolean!
   state: String!
   street1: String!
-  street2: String!
+  street2: String
   userId: String!
   zip: String!
 }
@@ -30,12 +30,12 @@ input AddressWhereInput {
   AND: [AddressWhereInput!]
   carrierFacility: StringFilter
   city: StringFilter
-  company: StringFilter
+  company: NullableStringFilter
   country: StringFilter
   created: DateTimeFilter
   easyPostId: StringFilter
   email: StringFilter
-  id: StringFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [AddressWhereInput!]
   OR: [AddressWhereInput!]
@@ -44,13 +44,18 @@ input AddressWhereInput {
   shipments: ShipmentFilter
   state: StringFilter
   street1: StringFilter
-  street2: StringFilter
+  street2: NullableStringFilter
   userId: StringFilter
   zip: StringFilter
 }
 
 input AddressWhereUniqueInput {
   id: String
+}
+
+input BinCreateManyWithoutWarehouseInput {
+  connect: [BinWhereUniqueInput!]
+  create: [BinCreateWithoutWarehouseInput!]
 }
 
 input BinCreateOneWithoutInventoryInput {
@@ -65,9 +70,29 @@ input BinCreateWithoutInventoryInput {
   freeNodes: BinFreeNodeCreateManyWithoutBinInput
   height: Float!
   id: String
-  location: Int!
+  location: String!
+  row: Int!
+  warehouse: WarehouseCreateOneWithoutBinInput!
+  width: Float!
+}
+
+input BinCreateWithoutWarehouseInput {
+  cell: Int!
+  column: Int!
+  created: DateTime
+  freeNodes: BinFreeNodeCreateManyWithoutBinInput
+  height: Float!
+  id: String
+  inventory: InventoryCreateManyWithoutBinInput
+  location: String!
   row: Int!
   width: Float!
+}
+
+input BinFilter {
+  every: BinWhereInput
+  none: BinWhereInput
+  some: BinWhereInput
 }
 
 input BinFreeNodeCreateManyWithoutBinInput {
@@ -96,7 +121,7 @@ input BinFreeNodeWhereInput {
   binId: StringFilter
   created: DateTimeFilter
   height: FloatFilter
-  id: StringFilter
+  id: UUIDFilter
   NOT: [BinFreeNodeWhereInput!]
   OR: [BinFreeNodeWhereInput!]
   width: FloatFilter
@@ -115,12 +140,14 @@ input BinWhereInput {
   created: DateTimeFilter
   freeNodes: BinFreeNodeFilter
   height: FloatFilter
-  id: StringFilter
+  id: UUIDFilter
   inventory: InventoryFilter
-  location: IntFilter
+  location: StringFilter
   NOT: [BinWhereInput!]
   OR: [BinWhereInput!]
   row: IntFilter
+  warehouse: WarehouseWhereInput
+  warehouseId: StringFilter
   width: FloatFilter
 }
 
@@ -145,8 +172,8 @@ input BrandCreateOneWithoutProductsInput {
 
 input BrandCreateWithoutProductsInput {
   created: DateTime
-  description: String!
-  founded: DateTime!
+  description: String
+  founded: DateTime
   id: String
   name: String!
   slug: String!
@@ -155,9 +182,9 @@ input BrandCreateWithoutProductsInput {
 input BrandWhereInput {
   AND: [BrandWhereInput!]
   created: DateTimeFilter
-  description: StringFilter
-  founded: DateTimeFilter
-  id: StringFilter
+  description: NullableStringFilter
+  founded: NullableDateTimeFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [BrandWhereInput!]
   OR: [BrandWhereInput!]
@@ -173,7 +200,7 @@ input BrandWhereUniqueInput {
 type Category {
   id: String!
   name: String!
-  parentId: String!
+  parentId: String
 }
 
 input CategoryCreateOneWithoutProductsInput {
@@ -183,22 +210,22 @@ input CategoryCreateOneWithoutProductsInput {
 
 input CategoryCreateWithoutProductsInput {
   created: DateTime
-  description: String!
+  description: String
   id: String
   name: String!
-  parentId: String!
+  parentId: String
   slug: String!
 }
 
 input CategoryWhereInput {
   AND: [CategoryWhereInput!]
   created: DateTimeFilter
-  description: StringFilter
-  id: StringFilter
+  description: NullableStringFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [CategoryWhereInput!]
   OR: [CategoryWhereInput!]
-  parentId: StringFilter
+  parentId: NullableStringFilter
   products: ProductFilter
   slug: StringFilter
 }
@@ -255,6 +282,11 @@ input InventoryCreateincludedEssentialsInput {
   set: [String!]
 }
 
+input InventoryCreateManyWithoutBinInput {
+  connect: [InventoryWhereUniqueInput!]
+  create: [InventoryCreateWithoutBinInput!]
+}
+
 input InventoryCreateManyWithoutOrdersInput {
   connect: [InventoryWhereUniqueInput!]
   create: [InventoryCreateWithoutOrdersInput!]
@@ -270,56 +302,78 @@ input InventoryCreateManyWithoutShipmentsInput {
   create: [InventoryCreateWithoutShipmentsInput!]
 }
 
-input InventoryCreateWithoutOrdersInput {
+input InventoryCreateWithoutBinInput {
   active: Boolean
-  bin: BinCreateOneWithoutInventoryInput!
   condition: InventoryCondition
   created: DateTime
   id: String
   includedEssentials: InventoryCreateincludedEssentialsInput
-  memberId: String!
+  memberId: String
+  orderItemsId: String
+  orders: OrderCreateManyWithoutInventoryInput
   product: ProductCreateOneWithoutInventoryInput!
   return: Boolean
-  returnReason: String!
-  serial: String!
+  returnReason: String
+  serial: String
   shipments: ShipmentCreateManyWithoutInventoryInput
-  sku: String!
+  sku: String
+  status: InventoryStatus
+  userId: String!
+}
+
+input InventoryCreateWithoutOrdersInput {
+  active: Boolean
+  bin: BinCreateOneWithoutInventoryInput
+  condition: InventoryCondition
+  created: DateTime
+  id: String
+  includedEssentials: InventoryCreateincludedEssentialsInput
+  memberId: String
+  orderItemsId: String
+  product: ProductCreateOneWithoutInventoryInput!
+  return: Boolean
+  returnReason: String
+  serial: String
+  shipments: ShipmentCreateManyWithoutInventoryInput
+  sku: String
   status: InventoryStatus
   userId: String!
 }
 
 input InventoryCreateWithoutProductInput {
   active: Boolean
-  bin: BinCreateOneWithoutInventoryInput!
+  bin: BinCreateOneWithoutInventoryInput
   condition: InventoryCondition
   created: DateTime
   id: String
   includedEssentials: InventoryCreateincludedEssentialsInput
-  memberId: String!
+  memberId: String
+  orderItemsId: String
   orders: OrderCreateManyWithoutInventoryInput
   return: Boolean
-  returnReason: String!
-  serial: String!
+  returnReason: String
+  serial: String
   shipments: ShipmentCreateManyWithoutInventoryInput
-  sku: String!
+  sku: String
   status: InventoryStatus
   userId: String!
 }
 
 input InventoryCreateWithoutShipmentsInput {
   active: Boolean
-  bin: BinCreateOneWithoutInventoryInput!
+  bin: BinCreateOneWithoutInventoryInput
   condition: InventoryCondition
   created: DateTime
   id: String
   includedEssentials: InventoryCreateincludedEssentialsInput
-  memberId: String!
+  memberId: String
+  orderItemsId: String
   orders: OrderCreateManyWithoutInventoryInput
   product: ProductCreateOneWithoutInventoryInput!
   return: Boolean
-  returnReason: String!
-  serial: String!
-  sku: String!
+  returnReason: String
+  serial: String
+  sku: String
   status: InventoryStatus
   userId: String!
 }
@@ -352,21 +406,22 @@ input InventoryWhereInput {
   active: BooleanFilter
   AND: [InventoryWhereInput!]
   bin: BinWhereInput
-  binId: StringFilter
+  binId: NullableStringFilter
   condition: InventoryCondition
   created: DateTimeFilter
-  id: StringFilter
-  memberId: StringFilter
+  id: UUIDFilter
+  memberId: NullableStringFilter
   NOT: [InventoryWhereInput!]
   OR: [InventoryWhereInput!]
+  orderItemsId: NullableStringFilter
   orders: OrderFilter
   product: ProductWhereInput
   productId: StringFilter
   return: BooleanFilter
-  returnReason: StringFilter
-  serial: StringFilter
+  returnReason: NullableStringFilter
+  serial: NullableStringFilter
   shipments: ShipmentFilter
-  sku: StringFilter
+  sku: NullableStringFilter
   status: InventoryStatus
   userId: StringFilter
 }
@@ -377,6 +432,28 @@ input InventoryWhereUniqueInput {
 
 type Mutation {
   createOneShipment(data: ShipmentCreateInput!): Shipment!
+}
+
+input NullableDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+input NullableFloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: Float
+  notIn: [Float!]
 }
 
 input NullableStringFilter {
@@ -403,40 +480,38 @@ input OrderCreateManyWithoutInventoryInput {
   create: [OrderCreateWithoutInventoryInput!]
 }
 
-input OrderCreateManyWithoutProductsInput {
-  connect: [OrderWhereUniqueInput!]
-  create: [OrderCreateWithoutProductsInput!]
+input OrderCreateOneWithoutItemsInput {
+  connect: OrderWhereUniqueInput
+  create: OrderCreateWithoutItemsInput
 }
 
 input OrderCreateWithoutInventoryInput {
-  airbox: Boolean!
-  canceled: DateTime!
-  completed: DateTime!
-  confirmed: DateTime!
-  coupon: String!
+  airbox: Boolean
+  canceled: DateTime
+  completed: DateTime
+  confirmed: DateTime
+  coupon: String
   created: DateTime
-  expedited: Boolean!
+  expedited: Boolean
   id: String
-  plan: String!
-  productId: String
-  products: ProductCreateManyWithoutOrdersInput
-  shipKit: Boolean!
+  items: OrderItemCreateManyWithoutOrderInput
+  plan: String
+  shipKit: Boolean
   userId: String!
 }
 
-input OrderCreateWithoutProductsInput {
-  airbox: Boolean!
-  canceled: DateTime!
-  completed: DateTime!
-  confirmed: DateTime!
-  coupon: String!
+input OrderCreateWithoutItemsInput {
+  airbox: Boolean
+  canceled: DateTime
+  completed: DateTime
+  confirmed: DateTime
+  coupon: String
   created: DateTime
-  expedited: Boolean!
+  expedited: Boolean
   id: String
   inventory: InventoryCreateManyWithoutOrdersInput
-  plan: String!
-  productId: String
-  shipKit: Boolean!
+  plan: String
+  shipKit: Boolean
   userId: String!
 }
 
@@ -446,22 +521,68 @@ input OrderFilter {
   some: OrderWhereInput
 }
 
+input OrderItemCreateManyWithoutOrderInput {
+  connect: [OrderItemWhereUniqueInput!]
+  create: [OrderItemCreateWithoutOrderInput!]
+}
+
+input OrderItemCreateManyWithoutProductInput {
+  connect: [OrderItemWhereUniqueInput!]
+  create: [OrderItemCreateWithoutProductInput!]
+}
+
+input OrderItemCreateWithoutOrderInput {
+  created: DateTime
+  id: String
+  product: ProductCreateOneWithoutOrderItemInput!
+  quantity: Int
+}
+
+input OrderItemCreateWithoutProductInput {
+  created: DateTime
+  id: String
+  order: OrderCreateOneWithoutItemsInput!
+  quantity: Int
+}
+
+input OrderItemFilter {
+  every: OrderItemWhereInput
+  none: OrderItemWhereInput
+  some: OrderItemWhereInput
+}
+
+input OrderItemWhereInput {
+  AND: [OrderItemWhereInput!]
+  created: DateTimeFilter
+  id: UUIDFilter
+  NOT: [OrderItemWhereInput!]
+  OR: [OrderItemWhereInput!]
+  order: OrderWhereInput
+  orderId: StringFilter
+  product: ProductWhereInput
+  productId: StringFilter
+  quantity: IntFilter
+}
+
+input OrderItemWhereUniqueInput {
+  id: String
+}
+
 input OrderWhereInput {
   airbox: BooleanFilter
   AND: [OrderWhereInput!]
-  canceled: DateTimeFilter
-  completed: DateTimeFilter
-  confirmed: DateTimeFilter
-  coupon: StringFilter
+  canceled: NullableDateTimeFilter
+  completed: NullableDateTimeFilter
+  confirmed: NullableDateTimeFilter
+  coupon: NullableStringFilter
   created: DateTimeFilter
   expedited: BooleanFilter
-  id: StringFilter
+  id: UUIDFilter
   inventory: InventoryFilter
+  items: OrderItemFilter
   NOT: [OrderWhereInput!]
   OR: [OrderWhereInput!]
-  plan: StringFilter
-  productId: NullableStringFilter
-  products: ProductFilter
+  plan: NullableStringFilter
   shipKit: BooleanFilter
   userId: StringFilter
 }
@@ -479,14 +600,14 @@ input ProductCreateimagesInput {
   set: [String!]
 }
 
-input ProductCreateManyWithoutOrdersInput {
-  connect: [ProductWhereUniqueInput!]
-  create: [ProductCreateWithoutOrdersInput!]
-}
-
 input ProductCreateOneWithoutInventoryInput {
   connect: ProductWhereUniqueInput
   create: ProductCreateWithoutInventoryInput
+}
+
+input ProductCreateOneWithoutOrderItemInput {
+  connect: ProductWhereUniqueInput
+  create: ProductCreateWithoutOrderItemInput
 }
 
 input ProductCreateWithoutInventoryInput {
@@ -494,45 +615,45 @@ input ProductCreateWithoutInventoryInput {
   brand: BrandCreateOneWithoutProductsInput!
   category: CategoryCreateOneWithoutProductsInput!
   created: DateTime
-  demand: Int!
-  depth: Float!
-  description: String!
-  elasticId: String!
-  height: Float!
+  demand: Int
+  depth: Float
+  description: String
+  elasticId: String
+  height: Float
   id: String
   images: ProductCreateimagesInput
-  mfr: String!
+  mfr: String
   name: String!
-  orders: OrderCreateManyWithoutProductsInput
-  popularity: Int!
-  price: Float!
-  released: DateTime!
+  orderItem: OrderItemCreateManyWithoutProductInput
+  popularity: Int
+  price: Float
+  released: DateTime
   slug: String!
-  weight: Float!
-  width: Float!
+  weight: Float
+  width: Float
 }
 
-input ProductCreateWithoutOrdersInput {
+input ProductCreateWithoutOrderItemInput {
   active: Boolean
   brand: BrandCreateOneWithoutProductsInput!
   category: CategoryCreateOneWithoutProductsInput!
   created: DateTime
-  demand: Int!
-  depth: Float!
-  description: String!
-  elasticId: String!
-  height: Float!
+  demand: Int
+  depth: Float
+  description: String
+  elasticId: String
+  height: Float
   id: String
   images: ProductCreateimagesInput
   inventory: InventoryCreateManyWithoutProductInput
-  mfr: String!
+  mfr: String
   name: String!
-  popularity: Int!
-  price: Float!
-  released: DateTime!
+  popularity: Int
+  price: Float
+  released: DateTime
   slug: String!
-  weight: Float!
-  width: Float!
+  weight: Float
+  width: Float
 }
 
 input ProductFilter {
@@ -573,23 +694,23 @@ input ProductWhereInput {
   categoryId: StringFilter
   created: DateTimeFilter
   demand: IntFilter
-  depth: FloatFilter
-  description: StringFilter
-  elasticId: StringFilter
-  height: FloatFilter
-  id: StringFilter
+  depth: NullableFloatFilter
+  description: NullableStringFilter
+  elasticId: NullableStringFilter
+  height: NullableFloatFilter
+  id: UUIDFilter
   inventory: InventoryFilter
-  mfr: StringFilter
+  mfr: NullableStringFilter
   name: StringFilter
   NOT: [ProductWhereInput!]
   OR: [ProductWhereInput!]
-  orders: OrderFilter
+  orderItem: OrderItemFilter
   popularity: IntFilter
   price: FloatFilter
-  released: DateTimeFilter
+  released: NullableDateTimeFilter
   slug: StringFilter
-  weight: FloatFilter
-  width: FloatFilter
+  weight: NullableFloatFilter
+  width: NullableFloatFilter
 }
 
 input ProductWhereUniqueInput {
@@ -648,6 +769,11 @@ input ShipmentCreateManyWithoutInventoryInput {
   create: [ShipmentCreateWithoutInventoryInput!]
 }
 
+input ShipmentCreateManyWithoutWarehouseInput {
+  connect: [ShipmentWhereUniqueInput!]
+  create: [ShipmentCreateWithoutWarehouseInput!]
+}
+
 input ShipmentCreateWithoutInventoryInput {
   address: AddressCreateOneWithoutShipmentsInput!
   airbox: Boolean
@@ -673,6 +799,35 @@ input ShipmentCreateWithoutInventoryInput {
   userId: String!
   uspsZone: String!
   warehouse: WarehouseCreateOneWithoutShipmentInput!
+  weight: Float!
+  width: Float!
+}
+
+input ShipmentCreateWithoutWarehouseInput {
+  address: AddressCreateOneWithoutShipmentsInput!
+  airbox: Boolean
+  carrierDeliveredAt: DateTime!
+  carrierReceivedAt: DateTime!
+  created: DateTime
+  depth: Float!
+  direction: ShipmentDirection
+  easyPostId: String!
+  estDeliveryDate: DateTime!
+  expedited: Boolean
+  height: Float!
+  id: String
+  insurance: Float!
+  inventory: InventoryCreateManyWithoutShipmentsInput
+  labelURL: String!
+  labelZPL: String!
+  pickup: Boolean
+  publicURL: String!
+  refundStatus: String!
+  status: ShipmentStatus
+  trackingCode: String!
+  type: ShipmentType
+  userId: String!
+  uspsZone: String!
   weight: Float!
   width: Float!
 }
@@ -751,7 +906,7 @@ input ShipmentWhereInput {
   estDeliveryDate: DateTimeFilter
   expedited: BooleanFilter
   height: FloatFilter
-  id: StringFilter
+  id: UUIDFilter
   insurance: FloatFilter
   inventory: InventoryFilter
   labelURL: StringFilter
@@ -795,15 +950,54 @@ type User {
   email: String!
 }
 
+scalar UUID
+
+input UUIDFilter {
+  contains: UUID
+  endsWith: UUID
+  equals: UUID
+  gt: UUID
+  gte: UUID
+  in: [UUID!]
+  lt: UUID
+  lte: UUID
+  not: UUID
+  notIn: [UUID!]
+  startsWith: UUID
+}
+
+input WarehouseCreateOneWithoutBinInput {
+  connect: WarehouseWhereUniqueInput
+  create: WarehouseCreateWithoutBinInput
+}
+
 input WarehouseCreateOneWithoutShipmentInput {
   connect: WarehouseWhereUniqueInput
   create: WarehouseCreateWithoutShipmentInput
 }
 
-input WarehouseCreateWithoutShipmentInput {
+input WarehouseCreateWithoutBinInput {
   carrierFacility: String!
   city: String!
-  company: String!
+  country: String!
+  created: DateTime
+  easyPostId: String!
+  email: String!
+  id: String
+  name: String!
+  phone: String!
+  residential: Boolean!
+  shipment: ShipmentCreateManyWithoutWarehouseInput
+  state: String!
+  street1: String!
+  street2: String
+  zip: String!
+}
+
+input WarehouseCreateWithoutShipmentInput {
+  bin: BinCreateManyWithoutWarehouseInput
+  carrierFacility: String!
+  city: String!
   country: String!
   created: DateTime
   easyPostId: String!
@@ -814,20 +1008,20 @@ input WarehouseCreateWithoutShipmentInput {
   residential: Boolean!
   state: String!
   street1: String!
-  street2: String!
+  street2: String
   zip: String!
 }
 
 input WarehouseWhereInput {
   AND: [WarehouseWhereInput!]
+  bin: BinFilter
   carrierFacility: StringFilter
   city: StringFilter
-  company: StringFilter
   country: StringFilter
   created: DateTimeFilter
   easyPostId: StringFilter
   email: StringFilter
-  id: StringFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [WarehouseWhereInput!]
   OR: [WarehouseWhereInput!]
@@ -836,7 +1030,7 @@ input WarehouseWhereInput {
   shipment: ShipmentFilter
   state: StringFilter
   street1: StringFilter
-  street2: StringFilter
+  street2: NullableStringFilter
   zip: StringFilter
 }
 

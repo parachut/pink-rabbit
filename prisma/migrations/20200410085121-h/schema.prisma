@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -43,7 +43,7 @@ model Product {
   weight      Float?
   images      String[]
   mfr         String?
-  price       Float       @default(0)
+  price       Float
   popularity  Int         @default(0)
   demand      Int         @default(0)
   released    DateTime?
@@ -54,6 +54,7 @@ model Product {
   brandId     String      @map("brand_id")
   category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String      @map("category_id")
+  orders      Order[]     @relation("order_product", references: [id])
 
   @@map("product")
 }
@@ -103,24 +104,21 @@ model Inventory {
   memberId           String?            @map("member_id")
   shipments          Shipment[]         @relation("shipment_inventory", references: [id])
   orders             Order[]            @relation("order_inventory", references: [id])
-  orderItemsId       String?
 
   @@map("inventory")
 }
 
 model Bin {
-  id          String        @default(uuid()) @id
-  cell        Int
-  column      Int
-  row         Int
-  location    String
-  width       Float
-  height      Float
-  created     DateTime      @default(now())
-  freeNodes   BinFreeNode[]
-  warehouse   Warehouse     @relation(fields: [warehouseId], references: [id])
-  warehouseId String        @map("warehouse_id")
-  inventory   Inventory[]
+  id        String        @default(uuid()) @id
+  cell      Int
+  column    Int
+  row       Int
+  location  Int
+  width     Float
+  height    Float
+  created   DateTime      @default(now())
+  freeNodes BinFreeNode[]
+  inventory Inventory[]
 
   @@map("bin")
 }
@@ -238,6 +236,7 @@ model Shipment {
 
 model Order {
   id        String      @default(uuid()) @id
+  products  Product[]   @relation("order_product", references: [id])
   inventory Inventory[] @relation("order_inventory", references: [id])
   created   DateTime    @default(now())
   canceled  DateTime?
@@ -249,19 +248,6 @@ model Order {
   plan      String?
   expedited Boolean     @default(false)
   userId    String      @map("user_id")
-  items     OrderItem[]
 
   @@map("order")
-}
-
-model OrderItem {
-  id        String   @default(uuid()) @id
-  product   Product  @relation(fields: [productId], references: [id])
-  productId String   @map("product_id")
-  quantity  Int      @default(1)
-  order     Order    @relation(fields: [orderId], references: [id])
-  orderId   String   @map("order_id")
-  created   DateTime @default(now())
-
-  @@map("order_item")
 }
