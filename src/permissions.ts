@@ -1,4 +1,4 @@
-import { rule, shield, and, or, not } from 'graphql-shield';
+import { rule, shield, and, or, not, allow } from 'graphql-shield';
 import OktaJwtVerifier from '@okta/jwt-verifier';
 import okta from '@okta/okta-sdk-nodejs';
 import { Request, Response, NextFunction } from 'express';
@@ -11,8 +11,19 @@ const isAuthenticated = rule({ cache: 'contextual' })(async (parent, args, ctx: 
 
 // Permissions
 
-export const permissions = shield({
-  Query: {
-    shipments: isAuthenticated,
+export const permissions = shield(
+  {
+    Query: {
+      shipments: isAuthenticated,
+    },
+    Mutation: {
+      createOneAddress: allow,
+    },
+    Address: allow,
   },
-});
+  {
+    fallbackRule: allow,
+    allowExternalErrors: true,
+    debug: true,
+  },
+);

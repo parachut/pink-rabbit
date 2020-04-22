@@ -2,23 +2,50 @@
 ### Do not make changes to this file directly
 
 
+type Address {
+  city: String!
+  company: String
+  country: String!
+  email: String!
+  id: String!
+  name: String!
+  phone: String
+  residential: Boolean!
+  state: String!
+  street1: String!
+  street2: String
+  zip: String!
+}
+
+input AddressCreateInput {
+  city: String!
+  company: String
+  country: String!
+  email: String!
+  name: String!
+  phone: String
+  residential: Boolean
+  state: String!
+  street1: String!
+  street2: String
+  zip: String!
+}
+
 input AddressCreateOneWithoutShipmentsInput {
   connect: AddressWhereUniqueInput
   create: AddressCreateWithoutShipmentsInput
 }
 
 input AddressCreateWithoutShipmentsInput {
-  carrierFacility: String!
   city: String!
   company: String
   country: String
   created: DateTime
-  easyPostId: String!
   email: String!
-  id: String
+  id: String!
   name: String!
-  phone: String!
-  residential: Boolean!
+  phone: String
+  residential: Boolean
   state: String!
   street1: String!
   street2: String
@@ -28,18 +55,16 @@ input AddressCreateWithoutShipmentsInput {
 
 input AddressWhereInput {
   AND: [AddressWhereInput!]
-  carrierFacility: StringFilter
   city: StringFilter
   company: NullableStringFilter
   country: StringFilter
   created: DateTimeFilter
-  easyPostId: StringFilter
   email: StringFilter
-  id: UUIDFilter
+  id: StringFilter
   name: StringFilter
   NOT: [AddressWhereInput!]
   OR: [AddressWhereInput!]
-  phone: StringFilter
+  phone: NullableStringFilter
   residential: BooleanFilter
   shipments: ShipmentFilter
   state: StringFilter
@@ -431,6 +456,7 @@ input InventoryWhereUniqueInput {
 }
 
 type Mutation {
+  createOneAddress(data: AddressCreateInput!): Address!
   createOneShipment(data: ShipmentCreateInput!): Shipment!
 }
 
@@ -664,9 +690,7 @@ input ProductFilter {
 
 input ProductOrderByInput {
   active: OrderByArg
-  brand: OrderByArg
   brandId: OrderByArg
-  category: OrderByArg
   categoryId: OrderByArg
   created: OrderByArg
   demand: OrderByArg
@@ -844,7 +868,6 @@ input ShipmentFilter {
 }
 
 input ShipmentOrderByInput {
-  address: OrderByArg
   addressId: OrderByArg
   airbox: OrderByArg
   carrierDeliveredAt: OrderByArg
@@ -868,7 +891,6 @@ input ShipmentOrderByInput {
   type: OrderByArg
   userId: OrderByArg
   uspsZone: OrderByArg
-  warehouse: OrderByArg
   warehouseId: OrderByArg
   weight: OrderByArg
   width: OrderByArg

@@ -3,11 +3,11 @@ import { Request } from 'express';
 
 const prisma = new PrismaClient();
 
-export type Context = {
+export interface Context {
   prisma: PrismaClient;
   currentUser: any;
   req: Request;
-};
+}
 
 export const createContext = ({ req }: { req: Request }): Context => ({
   prisma,

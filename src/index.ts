@@ -3,17 +3,15 @@ require('dotenv').config();
 import bodyParser from 'body-parser';
 import express from 'express';
 import { createGraphqlMiddleware } from 'express-gql';
-import expressPlayground from 'graphql-playground-middleware-express';
-import { PrismaClient } from '@prisma/client';
 import { applyMiddleware } from 'graphql-middleware';
+import expressPlayground from 'graphql-playground-middleware-express';
 
 import { authMiddleware } from './auth';
-import { schema } from './schema';
-import { permissions } from './permissions';
 import { createContext } from './context';
+import { permissions } from './permissions';
+import { schema } from './schema';
 
 const app = express();
-const prisma = new PrismaClient();
 
 app.use(authMiddleware);
 
@@ -22,7 +20,10 @@ app.post(
   bodyParser.json(),
   createGraphqlMiddleware({
     context: createContext,
-    formatError: ({ req, error }) => error,
+    formatError: ({ req, error }) => {
+      console.log(error);
+      return error;
+    },
     schema: applyMiddleware(schema, permissions),
   }),
 );

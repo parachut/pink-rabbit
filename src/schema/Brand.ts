@@ -1,6 +1,6 @@
 import { objectType } from '@nexus/schema';
 
-export const Category = objectType({
+export const Brand = objectType({
   name: 'Brand',
   definition(t) {
     t.model.id();
