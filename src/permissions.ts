@@ -5,8 +5,18 @@ import { Request, Response, NextFunction } from 'express';
 import { Context } from './context';
 
 const isAuthenticated = rule({ cache: 'contextual' })(async (parent, args, ctx: Context, info) => {
-  console.log(ctx.req.currentUser);
   return ctx.currentUser.id !== 'anon';
+});
+
+const isAddressOwner = rule({ cache: 'contextual' })(async (parent, args, ctx: Context, info) => {
+  const result = await ctx.prisma.address.count({
+    where: {
+      userId: ctx.currentUser.id,
+      id: args.where.id,
+    },
+  });
+
+  return !!result;
 });
 
 // Permissions
@@ -18,6 +28,7 @@ export const permissions = shield(
     },
     Mutation: {
       createOneAddress: allow,
+      deleteOneAddress: and(isAuthenticated, isAddressOwner),
     },
     Address: allow,
   },

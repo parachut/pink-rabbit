@@ -3,6 +3,15 @@
   "steps": [
     {
       "tag": "CreateEnum",
+      "enum": "DatabaseAction",
+      "values": [
+        "CREATED",
+        "UPDATED",
+        "DELETED"
+      ]
+    },
+    {
+      "tag": "CreateEnum",
       "enum": "InventoryCondition",
       "values": [
         "NEW",
@@ -121,7 +130,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -164,14 +173,14 @@
       "model": "Brand",
       "field": "description",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Brand",
       "field": "founded",
       "type": "DateTime",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -269,7 +278,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -312,14 +321,14 @@
       "model": "Category",
       "field": "description",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Category",
       "field": "parentId",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -442,7 +451,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -485,7 +494,7 @@
       "model": "Product",
       "field": "description",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -524,28 +533,28 @@
       "model": "Product",
       "field": "width",
       "type": "Float",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Product",
       "field": "height",
       "type": "Float",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Product",
       "field": "depth",
       "type": "Float",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Product",
       "field": "weight",
       "type": "Float",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -559,7 +568,7 @@
       "model": "Product",
       "field": "mfr",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -569,11 +578,61 @@
       "arity": "Required"
     },
     {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Product",
+          "field": "price"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Product",
+          "field": "price"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "0"
+    },
+    {
       "tag": "CreateField",
       "model": "Product",
       "field": "popularity",
       "type": "Int",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Product",
+          "field": "popularity"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Product",
+          "field": "popularity"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "0"
     },
     {
       "tag": "CreateField",
@@ -583,18 +642,43 @@
       "arity": "Required"
     },
     {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Product",
+          "field": "demand"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Product",
+          "field": "demand"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "0"
+    },
+    {
       "tag": "CreateField",
       "model": "Product",
       "field": "released",
       "type": "DateTime",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Product",
       "field": "elasticId",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -817,52 +901,6 @@
       "value": "\"category_id\""
     },
     {
-      "tag": "CreateField",
-      "model": "Product",
-      "field": "orders",
-      "type": "Order",
-      "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Product",
-          "field": "orders"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Product",
-          "field": "orders"
-        },
-        "directive": "relation"
-      },
-      "argument": "",
-      "value": "\"order_product\""
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Product",
-          "field": "orders"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
-    },
-    {
       "tag": "CreateDirective",
       "location": {
         "path": {
@@ -919,7 +957,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -937,14 +975,14 @@
       "model": "Inventory",
       "field": "serial",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Inventory",
       "field": "sku",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -1079,7 +1117,7 @@
       "model": "Inventory",
       "field": "returnReason",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -1175,7 +1213,7 @@
       "model": "Inventory",
       "field": "bin",
       "type": "Bin",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -1221,7 +1259,7 @@
       "model": "Inventory",
       "field": "binId",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -1363,7 +1401,7 @@
       "model": "Inventory",
       "field": "memberId",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -1483,6 +1521,13 @@
       "value": "[id]"
     },
     {
+      "tag": "CreateField",
+      "model": "Inventory",
+      "field": "orderItemsId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
       "tag": "CreateDirective",
       "location": {
         "path": {
@@ -1539,7 +1584,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -1577,7 +1622,7 @@
       "tag": "CreateField",
       "model": "Bin",
       "field": "location",
-      "type": "Int",
+      "type": "String",
       "arity": "Required"
     },
     {
@@ -1632,6 +1677,84 @@
       "field": "freeNodes",
       "type": "BinFreeNode",
       "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Bin",
+      "field": "warehouse",
+      "type": "Warehouse",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Bin",
+          "field": "warehouse"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Bin",
+          "field": "warehouse"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[warehouseId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Bin",
+          "field": "warehouse"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Bin",
+      "field": "warehouseId",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Bin",
+          "field": "warehouseId"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Bin",
+          "field": "warehouseId"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"warehouse_id\""
     },
     {
       "tag": "CreateField",
@@ -1697,7 +1820,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -1890,31 +2013,6 @@
           "model": "Address",
           "field": "id"
         },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Address",
-          "field": "id"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "cuid()"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Address",
-          "field": "id"
-        },
         "directive": "id"
       }
     },
@@ -1930,7 +2028,7 @@
       "model": "Address",
       "field": "street2",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -1961,28 +2059,14 @@
       "arity": "Required"
     },
     {
-      "tag": "CreateField",
-      "model": "Address",
-      "field": "residential",
-      "type": "Boolean",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Address",
-      "field": "carrierFacility",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
       "tag": "CreateDirective",
       "location": {
         "path": {
           "tag": "Field",
           "model": "Address",
-          "field": "carrierFacility"
+          "field": "country"
         },
-        "directive": "map"
+        "directive": "default"
       }
     },
     {
@@ -1992,12 +2076,44 @@
         "path": {
           "tag": "Field",
           "model": "Address",
-          "field": "carrierFacility"
+          "field": "country"
         },
-        "directive": "map"
+        "directive": "default"
       },
       "argument": "",
-      "value": "\"carrier_facility\""
+      "value": "\"US\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "Address",
+      "field": "residential",
+      "type": "Boolean",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Address",
+          "field": "residential"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Address",
+          "field": "residential"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "false"
     },
     {
       "tag": "CreateField",
@@ -2011,14 +2127,14 @@
       "model": "Address",
       "field": "company",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Address",
       "field": "phone",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -2026,70 +2142,6 @@
       "field": "email",
       "type": "String",
       "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Address",
-      "field": "created",
-      "type": "DateTime",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Address",
-          "field": "created"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Address",
-          "field": "created"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "now()"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Address",
-      "field": "easyPostId",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Address",
-          "field": "easyPostId"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Address",
-          "field": "easyPostId"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"easy_post_id\""
     },
     {
       "tag": "CreateField",
@@ -2131,6 +2183,13 @@
       "arity": "List"
     },
     {
+      "tag": "CreateField",
+      "model": "Address",
+      "field": "history",
+      "type": "AddressHistory",
+      "arity": "List"
+    },
+    {
       "tag": "CreateDirective",
       "location": {
         "path": {
@@ -2152,6 +2211,227 @@
       },
       "argument": "",
       "value": "\"address\""
+    },
+    {
+      "tag": "CreateModel",
+      "model": "AddressHistory"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AddressHistory",
+      "field": "time",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "time"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "time"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AddressHistory",
+      "field": "action",
+      "type": "DatabaseAction",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "action"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "action"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "CREATED"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AddressHistory",
+      "field": "userId",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "userId"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "userId"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"user_id\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "AddressHistory",
+      "field": "addressId",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "addressId"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "addressId"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"address_id\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "AddressHistory",
+      "field": "address",
+      "type": "Address",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "address"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "address"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[addressId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "address"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AddressHistory",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AddressHistory",
+          "field": "id"
+        },
+        "directive": "id"
+      }
     },
     {
       "tag": "CreateModel",
@@ -2187,7 +2467,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -2212,7 +2492,7 @@
       "model": "Warehouse",
       "field": "street2",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -2285,13 +2565,6 @@
       "tag": "CreateField",
       "model": "Warehouse",
       "field": "name",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Warehouse",
-      "field": "company",
       "type": "String",
       "arity": "Required"
     },
@@ -2430,7 +2703,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -3313,7 +3586,7 @@
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "uuid()"
     },
     {
       "tag": "CreateDirective",
@@ -3325,52 +3598,6 @@
         },
         "directive": "id"
       }
-    },
-    {
-      "tag": "CreateField",
-      "model": "Order",
-      "field": "products",
-      "type": "Product",
-      "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Order",
-          "field": "products"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Order",
-          "field": "products"
-        },
-        "directive": "relation"
-      },
-      "argument": "",
-      "value": "\"order_product\""
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Order",
-          "field": "products"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
     },
     {
       "tag": "CreateField",
@@ -3455,21 +3682,21 @@
       "model": "Order",
       "field": "canceled",
       "type": "DateTime",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Order",
       "field": "completed",
       "type": "DateTime",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Order",
       "field": "confirmed",
       "type": "DateTime",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -3479,6 +3706,31 @@
       "arity": "Required"
     },
     {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "shipKit"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "shipKit"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "false"
+    },
+    {
       "tag": "CreateField",
       "model": "Order",
       "field": "airbox",
@@ -3486,18 +3738,43 @@
       "arity": "Required"
     },
     {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "airbox"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "airbox"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "false"
+    },
+    {
       "tag": "CreateField",
       "model": "Order",
       "field": "coupon",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
       "model": "Order",
       "field": "plan",
       "type": "String",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -3505,6 +3782,31 @@
       "field": "expedited",
       "type": "Boolean",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "expedited"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "expedited"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "false"
     },
     {
       "tag": "CreateField",
@@ -3541,9 +3843,9 @@
     {
       "tag": "CreateField",
       "model": "Order",
-      "field": "productId",
-      "type": "String",
-      "arity": "Optional"
+      "field": "items",
+      "type": "OrderItem",
+      "arity": "List"
     },
     {
       "tag": "CreateDirective",
@@ -3567,6 +3869,296 @@
       },
       "argument": "",
       "value": "\"order\""
+    },
+    {
+      "tag": "CreateModel",
+      "model": "OrderItem"
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "uuid()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "product",
+      "type": "Product",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "product"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "product"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[productId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "product"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "productId",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "productId"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "productId"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"product_id\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "quantity",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "quantity"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "quantity"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "1"
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "order",
+      "type": "Order",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "order"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "order"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[orderId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "order"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "orderId",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "orderId"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "orderId"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"order_id\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "OrderItem",
+      "field": "created",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "created"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "OrderItem",
+          "field": "created"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "OrderItem"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Model",
+          "model": "OrderItem"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"order_item\""
     }
   ]
 }

@@ -35,14 +35,12 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   } else {
     const [authType, token] = authorization.trim().split(' ');
 
-    console.log(token);
-
     if (token) {
-      const {
-        claims: { sub },
-      } = await jwtVerifier.verifyAccessToken(token, 'api://default');
-
       try {
+        const {
+          claims: { sub },
+        } = await jwtVerifier.verifyAccessToken(token, 'api://default');
+
         req.currentUser = await oktaClient.getUser(sub);
       } catch (e) {
         console.log(e);

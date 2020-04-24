@@ -1,0 +1,194 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Address",
+      "field": "deleted",
+      "type": "Boolean",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Address",
+      "field": "warehouses",
+      "type": "Warehouse",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Address",
+      "field": "orders",
+      "type": "Order",
+      "arity": "List"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "AddressHistory",
+      "field": "addressId",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "AddressHistory",
+      "field": "address",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Warehouse",
+      "field": "address",
+      "type": "Address",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Warehouse",
+          "field": "address"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Warehouse",
+          "field": "address"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[addressId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Warehouse",
+          "field": "address"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Warehouse",
+      "field": "addressId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "street1"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "street2"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "city"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "state"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "zip"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "country"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "residential"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "carrierFacility"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "phone"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Warehouse",
+      "field": "email"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Order",
+      "field": "address",
+      "type": "Address",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "address"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "address"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[addressId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Order",
+          "field": "address"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Order",
+      "field": "addressId",
+      "type": "String",
+      "arity": "Optional"
+    }
+  ]
+}

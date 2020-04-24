@@ -32,5 +32,6 @@ export const AddressCreateInput = inputObjectType({
     t.string('zip', { required: true });
     t.string('country', { required: true });
     t.boolean('residential');
+    t.string('userId');
   },
 });

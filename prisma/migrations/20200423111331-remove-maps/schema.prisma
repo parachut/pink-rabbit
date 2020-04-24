@@ -7,6 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum DatabaseAction {
+  CREATED
+  UPDATED
+  DELETED
+}
+
 model Brand {
   id          String    @default(uuid()) @id
   name        String
@@ -15,8 +21,6 @@ model Brand {
   founded     DateTime?
   created     DateTime  @default(now())
   products    Product[]
-
-  @@map("brand")
 }
 
 model Category {
@@ -24,11 +28,9 @@ model Category {
   name        String
   slug        String    @unique
   description String?
-  parentId    String?   @map("parent_id")
+  parentId    String?
   created     DateTime  @default(now())
   products    Product[]
-
-  @@map("category")
 }
 
 model Product {
@@ -47,15 +49,13 @@ model Product {
   popularity  Int         @default(0)
   demand      Int         @default(0)
   released    DateTime?
-  elasticId   String?     @map("elastic_id")
+  elasticId   String?
   created     DateTime    @default(now())
   inventory   Inventory[]
   brand       Brand       @relation(fields: [brandId], references: [id])
-  brandId     String      @map("brand_id")
+  brandId     String
   category    Category    @relation(fields: [categoryId], references: [id])
-  categoryId  String      @map("category_id")
-
-  @@map("product")
+  categoryId  String
 }
 
 enum InventoryCondition {
@@ -91,21 +91,19 @@ model Inventory {
   active             Boolean            @default(true)
   condition          InventoryCondition @default(NEW)
   status             InventoryStatus    @default(NEW)
-  includedEssentials String[]           @map("included_essentials")
-  returnReason       String?            @map("return_reason")
+  includedEssentials String[]
+  returnReason       String?
   return             Boolean            @default(false)
   created            DateTime           @default(now())
   bin                Bin?               @relation(fields: [binId], references: [id])
-  binId              String?            @map("bin_id")
+  binId              String?
   product            Product            @relation(fields: [productId], references: [id])
-  productId          String             @map("product_id")
-  userId             String             @map("user_id")
-  memberId           String?            @map("member_id")
+  productId          String
+  userId             String
+  memberId           String?
   shipments          Shipment[]         @relation("shipment_inventory", references: [id])
   orders             Order[]            @relation("order_inventory", references: [id])
   orderItemsId       String?
-
-  @@map("inventory")
 }
 
 model Bin {
@@ -119,10 +117,8 @@ model Bin {
   created     DateTime      @default(now())
   freeNodes   BinFreeNode[]
   warehouse   Warehouse     @relation(fields: [warehouseId], references: [id])
-  warehouseId String        @map("warehouse_id")
+  warehouseId String
   inventory   Inventory[]
-
-  @@map("bin")
 }
 
 model BinFreeNode {
@@ -133,31 +129,35 @@ model BinFreeNode {
   height  Float
   created DateTime @default(now())
   bin     Bin      @relation(fields: [binId], references: [id])
-  binId   String   @map("bin_id")
-
-  @@map("bin_free_node")
+  binId   String
 }
 
 model Address {
-  id              String     @default(uuid()) @id
-  street1         String
-  street2         String?
-  city            String
-  state           String
-  zip             String
-  country         String     @default("US")
-  residential     Boolean
-  carrierFacility String     @map("carrier_facility")
-  name            String
-  company         String?
-  phone           String
-  email           String
-  created         DateTime   @default(now())
-  easyPostId      String     @map("easy_post_id")
-  userId          String     @map("user_id")
-  shipments       Shipment[]
+  id          String           @default(uuid()) @id
+  shippoId    String
+  street1     String
+  street2     String?
+  city        String
+  state       String
+  zip         String
+  country     String           @default("US")
+  residential Boolean          @default(false)
+  name        String
+  company     String?
+  phone       String?
+  email       String
+  userId      String
+  shipments   Shipment[]
+  history     AddressHistory[]
+}
 
-  @@map("address")
+model AddressHistory {
+  time      DateTime       @default(now())
+  action    DatabaseAction @default(CREATED)
+  userId    String
+  addressId String
+  address   Address        @relation(fields: [addressId], references: [id])
+  id        Int            @default(autoincrement()) @id
 }
 
 model Warehouse {
@@ -169,14 +169,12 @@ model Warehouse {
   zip             String
   country         String
   residential     Boolean
-  carrierFacility String   @map("carrier_facility")
+  carrierFacility String
   name            String
   phone           String
   email           String
   created         DateTime @default(now())
-  easyPostId      String   @map("easy_post_id")
-
-  @@map("warehouse")
+  shippoId        String
 }
 
 enum ShipmentDirection {
@@ -215,25 +213,23 @@ model Shipment {
   depth              Float
   weight             Float
   insurance          Float
-  labelURL           String            @map("label_url")
-  labelZPL           String            @map("label_zpl")
-  publicURL          String            @map("public_url")
-  trackingCode       String            @map("tracking_code")
-  uspsZone           String            @map("usps_zone")
-  refundStatus       String            @map("refund_status")
-  carrierDeliveredAt DateTime          @map("carrier_delivered_at")
-  carrierReceivedAt  DateTime          @map("carrier_received_at")
-  estDeliveryDate    DateTime          @map("est_delivery_date")
+  labelURL           String
+  labelZPL           String
+  publicURL          String
+  trackingCode       String
+  uspsZone           String
+  refundStatus       String
+  carrierDeliveredAt DateTime
+  carrierReceivedAt  DateTime
+  estDeliveryDate    DateTime
   created            DateTime          @default(now())
-  easyPostId         String            @map("easy_post_id")
-  userId             String            @map("user_id")
-  addressId          String            @map("address_id")
+  easyPostId         String
+  userId             String
+  addressId          String
   address            Address           @relation(fields: [addressId], references: [id])
-  warehouseId        String            @map("warehouse_id")
+  warehouseId        String
   warehouse          Warehouse         @relation(fields: [warehouseId], references: [id])
   inventory          Inventory[]       @relation("shipment_inventory", references: [id])
-
-  @@map("shipment")
 }
 
 model Order {
@@ -248,20 +244,16 @@ model Order {
   coupon    String?
   plan      String?
   expedited Boolean     @default(false)
-  userId    String      @map("user_id")
+  userId    String
   items     OrderItem[]
-
-  @@map("order")
 }
 
 model OrderItem {
   id        String   @default(uuid()) @id
   product   Product  @relation(fields: [productId], references: [id])
-  productId String   @map("product_id")
+  productId String
   quantity  Int      @default(1)
   order     Order    @relation(fields: [orderId], references: [id])
-  orderId   String   @map("order_id")
+  orderId   String
   created   DateTime @default(now())
-
-  @@map("order_item")
 }

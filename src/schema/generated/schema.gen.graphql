@@ -28,7 +28,13 @@ input AddressCreateInput {
   state: String!
   street1: String!
   street2: String
+  userId: String
   zip: String!
+}
+
+input AddressCreateOneWithoutOrdersInput {
+  connect: AddressWhereUniqueInput
+  create: AddressCreateWithoutOrdersInput
 }
 
 input AddressCreateOneWithoutShipmentsInput {
@@ -36,16 +42,67 @@ input AddressCreateOneWithoutShipmentsInput {
   create: AddressCreateWithoutShipmentsInput
 }
 
+input AddressCreateOneWithoutWarehousesInput {
+  connect: AddressWhereUniqueInput
+  create: AddressCreateWithoutWarehousesInput
+}
+
+input AddressCreateWithoutOrdersInput {
+  city: String!
+  company: String
+  country: String
+  deleted: Boolean
+  email: String!
+  history: AddressHistoryCreateManyWithoutAddressInput
+  id: String
+  name: String!
+  phone: String
+  residential: Boolean
+  shipments: ShipmentCreateManyWithoutAddressInput
+  shippoId: String!
+  state: String!
+  street1: String!
+  street2: String
+  userId: String!
+  warehouses: WarehouseCreateManyWithoutAddressInput
+  zip: String!
+}
+
 input AddressCreateWithoutShipmentsInput {
   city: String!
   company: String
   country: String
-  created: DateTime
+  deleted: Boolean
   email: String!
-  id: String!
+  history: AddressHistoryCreateManyWithoutAddressInput
+  id: String
   name: String!
+  orders: OrderCreateManyWithoutAddressInput
   phone: String
   residential: Boolean
+  shippoId: String!
+  state: String!
+  street1: String!
+  street2: String
+  userId: String!
+  warehouses: WarehouseCreateManyWithoutAddressInput
+  zip: String!
+}
+
+input AddressCreateWithoutWarehousesInput {
+  city: String!
+  company: String
+  country: String
+  deleted: Boolean
+  email: String!
+  history: AddressHistoryCreateManyWithoutAddressInput
+  id: String
+  name: String!
+  orders: OrderCreateManyWithoutAddressInput
+  phone: String
+  residential: Boolean
+  shipments: ShipmentCreateManyWithoutAddressInput
+  shippoId: String!
   state: String!
   street1: String!
   street2: String
@@ -53,24 +110,61 @@ input AddressCreateWithoutShipmentsInput {
   zip: String!
 }
 
+input AddressHistoryCreateManyWithoutAddressInput {
+  connect: [AddressHistoryWhereUniqueInput!]
+  create: [AddressHistoryCreateWithoutAddressInput!]
+}
+
+input AddressHistoryCreateWithoutAddressInput {
+  action: DatabaseAction
+  time: DateTime
+  userId: String!
+}
+
+input AddressHistoryFilter {
+  every: AddressHistoryWhereInput
+  none: AddressHistoryWhereInput
+  some: AddressHistoryWhereInput
+}
+
+input AddressHistoryWhereInput {
+  action: DatabaseAction
+  address: AddressWhereInput
+  addressId: NullableStringFilter
+  AND: [AddressHistoryWhereInput!]
+  id: IntFilter
+  NOT: [AddressHistoryWhereInput!]
+  OR: [AddressHistoryWhereInput!]
+  time: DateTimeFilter
+  userId: StringFilter
+}
+
+input AddressHistoryWhereUniqueInput {
+  id: Int
+}
+
 input AddressWhereInput {
   AND: [AddressWhereInput!]
   city: StringFilter
   company: NullableStringFilter
   country: StringFilter
-  created: DateTimeFilter
+  deleted: NullableBooleanFilter
   email: StringFilter
-  id: StringFilter
+  history: AddressHistoryFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [AddressWhereInput!]
   OR: [AddressWhereInput!]
+  orders: OrderFilter
   phone: NullableStringFilter
   residential: BooleanFilter
   shipments: ShipmentFilter
+  shippoId: StringFilter
   state: StringFilter
   street1: StringFilter
   street2: NullableStringFilter
   userId: StringFilter
+  warehouses: WarehouseFilter
   zip: StringFilter
 }
 
@@ -258,6 +352,12 @@ input CategoryWhereInput {
 input CategoryWhereUniqueInput {
   id: String
   slug: String
+}
+
+enum DatabaseAction {
+  CREATED
+  DELETED
+  UPDATED
 }
 
 scalar DateTime
@@ -458,6 +558,12 @@ input InventoryWhereUniqueInput {
 type Mutation {
   createOneAddress(data: AddressCreateInput!): Address!
   createOneShipment(data: ShipmentCreateInput!): Shipment!
+  deleteOneAddress(where: AddressWhereUniqueInput!): Address!
+}
+
+input NullableBooleanFilter {
+  equals: Boolean
+  not: Boolean
 }
 
 input NullableDateTimeFilter {
@@ -501,6 +607,11 @@ enum OrderByArg {
   desc
 }
 
+input OrderCreateManyWithoutAddressInput {
+  connect: [OrderWhereUniqueInput!]
+  create: [OrderCreateWithoutAddressInput!]
+}
+
 input OrderCreateManyWithoutInventoryInput {
   connect: [OrderWhereUniqueInput!]
   create: [OrderCreateWithoutInventoryInput!]
@@ -511,7 +622,24 @@ input OrderCreateOneWithoutItemsInput {
   create: OrderCreateWithoutItemsInput
 }
 
+input OrderCreateWithoutAddressInput {
+  airbox: Boolean
+  canceled: DateTime
+  completed: DateTime
+  confirmed: DateTime
+  coupon: String
+  created: DateTime
+  expedited: Boolean
+  id: String
+  inventory: InventoryCreateManyWithoutOrdersInput
+  items: OrderItemCreateManyWithoutOrderInput
+  plan: String
+  shipKit: Boolean
+  userId: String!
+}
+
 input OrderCreateWithoutInventoryInput {
+  address: AddressCreateOneWithoutOrdersInput
   airbox: Boolean
   canceled: DateTime
   completed: DateTime
@@ -527,6 +655,7 @@ input OrderCreateWithoutInventoryInput {
 }
 
 input OrderCreateWithoutItemsInput {
+  address: AddressCreateOneWithoutOrdersInput
   airbox: Boolean
   canceled: DateTime
   completed: DateTime
@@ -595,6 +724,8 @@ input OrderItemWhereUniqueInput {
 }
 
 input OrderWhereInput {
+  address: AddressWhereInput
+  addressId: NullableStringFilter
   airbox: BooleanFilter
   AND: [OrderWhereInput!]
   canceled: NullableDateTimeFilter
@@ -788,6 +919,11 @@ input ShipmentCreateInput {
   width: Float!
 }
 
+input ShipmentCreateManyWithoutAddressInput {
+  connect: [ShipmentWhereUniqueInput!]
+  create: [ShipmentCreateWithoutAddressInput!]
+}
+
 input ShipmentCreateManyWithoutInventoryInput {
   connect: [ShipmentWhereUniqueInput!]
   create: [ShipmentCreateWithoutInventoryInput!]
@@ -796,6 +932,35 @@ input ShipmentCreateManyWithoutInventoryInput {
 input ShipmentCreateManyWithoutWarehouseInput {
   connect: [ShipmentWhereUniqueInput!]
   create: [ShipmentCreateWithoutWarehouseInput!]
+}
+
+input ShipmentCreateWithoutAddressInput {
+  airbox: Boolean
+  carrierDeliveredAt: DateTime!
+  carrierReceivedAt: DateTime!
+  created: DateTime
+  depth: Float!
+  direction: ShipmentDirection
+  easyPostId: String!
+  estDeliveryDate: DateTime!
+  expedited: Boolean
+  height: Float!
+  id: String
+  insurance: Float!
+  inventory: InventoryCreateManyWithoutShipmentsInput
+  labelURL: String!
+  labelZPL: String!
+  pickup: Boolean
+  publicURL: String!
+  refundStatus: String!
+  status: ShipmentStatus
+  trackingCode: String!
+  type: ShipmentType
+  userId: String!
+  uspsZone: String!
+  warehouse: WarehouseCreateOneWithoutShipmentInput!
+  weight: Float!
+  width: Float!
 }
 
 input ShipmentCreateWithoutInventoryInput {
@@ -988,6 +1153,11 @@ input UUIDFilter {
   startsWith: UUID
 }
 
+input WarehouseCreateManyWithoutAddressInput {
+  connect: [WarehouseWhereUniqueInput!]
+  create: [WarehouseCreateWithoutAddressInput!]
+}
+
 input WarehouseCreateOneWithoutBinInput {
   connect: WarehouseWhereUniqueInput
   create: WarehouseCreateWithoutBinInput
@@ -998,62 +1168,51 @@ input WarehouseCreateOneWithoutShipmentInput {
   create: WarehouseCreateWithoutShipmentInput
 }
 
-input WarehouseCreateWithoutBinInput {
-  carrierFacility: String!
-  city: String!
-  country: String!
+input WarehouseCreateWithoutAddressInput {
+  bin: BinCreateManyWithoutWarehouseInput
   created: DateTime
-  easyPostId: String!
-  email: String!
   id: String
   name: String!
-  phone: String!
-  residential: Boolean!
   shipment: ShipmentCreateManyWithoutWarehouseInput
-  state: String!
-  street1: String!
-  street2: String
-  zip: String!
+  shippoId: String!
+}
+
+input WarehouseCreateWithoutBinInput {
+  address: AddressCreateOneWithoutWarehousesInput
+  created: DateTime
+  id: String
+  name: String!
+  shipment: ShipmentCreateManyWithoutWarehouseInput
+  shippoId: String!
 }
 
 input WarehouseCreateWithoutShipmentInput {
+  address: AddressCreateOneWithoutWarehousesInput
   bin: BinCreateManyWithoutWarehouseInput
-  carrierFacility: String!
-  city: String!
-  country: String!
   created: DateTime
-  easyPostId: String!
-  email: String!
   id: String
   name: String!
-  phone: String!
-  residential: Boolean!
-  state: String!
-  street1: String!
-  street2: String
-  zip: String!
+  shippoId: String!
+}
+
+input WarehouseFilter {
+  every: WarehouseWhereInput
+  none: WarehouseWhereInput
+  some: WarehouseWhereInput
 }
 
 input WarehouseWhereInput {
+  address: AddressWhereInput
+  addressId: NullableStringFilter
   AND: [WarehouseWhereInput!]
   bin: BinFilter
-  carrierFacility: StringFilter
-  city: StringFilter
-  country: StringFilter
   created: DateTimeFilter
-  easyPostId: StringFilter
-  email: StringFilter
   id: UUIDFilter
   name: StringFilter
   NOT: [WarehouseWhereInput!]
   OR: [WarehouseWhereInput!]
-  phone: StringFilter
-  residential: BooleanFilter
   shipment: ShipmentFilter
-  state: StringFilter
-  street1: StringFilter
-  street2: NullableStringFilter
-  zip: StringFilter
+  shippoId: StringFilter
 }
 
 input WarehouseWhereUniqueInput {

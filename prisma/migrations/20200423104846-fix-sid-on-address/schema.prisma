@@ -7,6 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum DatabaseAction {
+  CREATED
+  UPDATED
+  DELETED
+}
+
 model Brand {
   id          String    @default(uuid()) @id
   name        String
@@ -43,7 +49,7 @@ model Product {
   weight      Float?
   images      String[]
   mfr         String?
-  price       Float
+  price       Float       @default(0)
   popularity  Int         @default(0)
   demand      Int         @default(0)
   released    DateTime?
@@ -54,7 +60,6 @@ model Product {
   brandId     String      @map("brand_id")
   category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String      @map("category_id")
-  orders      Order[]     @relation("order_product", references: [id])
 
   @@map("product")
 }
@@ -104,21 +109,24 @@ model Inventory {
   memberId           String?            @map("member_id")
   shipments          Shipment[]         @relation("shipment_inventory", references: [id])
   orders             Order[]            @relation("order_inventory", references: [id])
+  orderItemsId       String?
 
   @@map("inventory")
 }
 
 model Bin {
-  id        String        @default(uuid()) @id
-  cell      Int
-  column    Int
-  row       Int
-  location  Int
-  width     Float
-  height    Float
-  created   DateTime      @default(now())
-  freeNodes BinFreeNode[]
-  inventory Inventory[]
+  id          String        @default(uuid()) @id
+  cell        Int
+  column      Int
+  row         Int
+  location    String
+  width       Float
+  height      Float
+  created     DateTime      @default(now())
+  freeNodes   BinFreeNode[]
+  warehouse   Warehouse     @relation(fields: [warehouseId], references: [id])
+  warehouseId String        @map("warehouse_id")
+  inventory   Inventory[]
 
   @@map("bin")
 }
@@ -137,25 +145,35 @@ model BinFreeNode {
 }
 
 model Address {
-  id              String     @default(uuid()) @id
-  street1         String
-  street2         String?
-  city            String
-  state           String
-  zip             String
-  country         String     @default("US")
-  residential     Boolean
-  carrierFacility String     @map("carrier_facility")
-  name            String
-  company         String?
-  phone           String
-  email           String
-  created         DateTime   @default(now())
-  easyPostId      String     @map("easy_post_id")
-  userId          String     @map("user_id")
-  shipments       Shipment[]
+  id          String           @default(uuid()) @id
+  shippoId    String           @map("shippo_id")
+  street1     String
+  street2     String?
+  city        String
+  state       String
+  zip         String
+  country     String           @default("US")
+  residential Boolean          @default(false)
+  name        String
+  company     String?
+  phone       String?
+  email       String
+  userId      String           @map("user_id")
+  shipments   Shipment[]
+  history     AddressHistory[]
 
   @@map("address")
+}
+
+model AddressHistory {
+  time      DateTime       @default(now())
+  action    DatabaseAction @default(CREATED)
+  userId    String         @map("user_id")
+  addressId String         @map("address_id")
+  address   Address        @relation(fields: [addressId], references: [id])
+  id        Int            @default(autoincrement()) @id
+
+  @@map("address_history")
 }
 
 model Warehouse {
@@ -236,7 +254,6 @@ model Shipment {
 
 model Order {
   id        String      @default(uuid()) @id
-  products  Product[]   @relation("order_product", references: [id])
   inventory Inventory[] @relation("order_inventory", references: [id])
   created   DateTime    @default(now())
   canceled  DateTime?
@@ -248,6 +265,19 @@ model Order {
   plan      String?
   expedited Boolean     @default(false)
   userId    String      @map("user_id")
+  items     OrderItem[]
 
   @@map("order")
+}
+
+model OrderItem {
+  id        String   @default(uuid()) @id
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String   @map("product_id")
+  quantity  Int      @default(1)
+  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   String   @map("order_id")
+  created   DateTime @default(now())
+
+  @@map("order_item")
 }

@@ -7,6 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum DatabaseAction {
+  CREATED
+  UPDATED
+  DELETED
+}
+
 model Brand {
   id          String    @default(uuid()) @id
   name        String
@@ -139,23 +145,32 @@ model BinFreeNode {
 }
 
 model Address {
-  id          String     @id
+  id          String           @id
   street1     String
   street2     String?
   city        String
   state       String
   zip         String
-  country     String     @default("US")
-  residential Boolean    @default(false)
+  country     String           @default("US")
+  residential Boolean          @default(false)
   name        String
   company     String?
   phone       String?
   email       String
-  created     DateTime   @default(now())
-  userId      String     @map("user_id")
+  userId      String           @map("user_id")
   shipments   Shipment[]
+  history     AddressHistory[]
 
   @@map("address")
+}
+
+model AddressHistory {
+  time      DateTime       @default(now())
+  action    DatabaseAction @default(CREATED)
+  userId    String         @map("user_id")
+  addressId String         @map("address_id")
+  address   Address        @relation(fields: [addressId], references: [id])
+  id        Int            @default(autoincrement()) @id
 }
 
 model Warehouse {
